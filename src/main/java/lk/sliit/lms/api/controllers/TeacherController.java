@@ -1,6 +1,8 @@
 package lk.sliit.lms.api.controllers;
 
+import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.models.Teacher;
+import lk.sliit.lms.api.repositories.CourseRepository;
 import lk.sliit.lms.api.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Controller class for teacher
@@ -23,10 +25,28 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
+    @Autowired
+    private CourseRepository courseRepository;
+
     @GetMapping("/")
-    @ResponseBody
-    public List<Teacher> getAllTeachers(){
+    @ResponseBody()
+    public Set<Teacher> getAllTeachers(){
         return teacherService.getAllTeachers();
+    }
+
+    /**
+     *
+     * @return
+     */
+    @GetMapping("/courses")
+    @ResponseBody
+    public List<Course> getCourse(){
+
+        List<Course> courses = new ArrayList<>();
+        courseRepository.findAll().forEach(courses::add);
+
+        return courses;
+
     }
 
 }

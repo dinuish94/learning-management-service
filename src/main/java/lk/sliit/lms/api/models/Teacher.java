@@ -1,9 +1,6 @@
 package lk.sliit.lms.api.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Represents the teacher entity
@@ -12,20 +9,21 @@ import javax.persistence.Id;
  */
 
 @Entity
+@Table(name = "teacher")
 public class Teacher {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long tId;
 
     private String name;
 
-    public Integer getId() {
-        return id;
+    public Long getId() {
+        return tId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Long id) {
+        this.tId = id;
     }
 
     public String getName() {

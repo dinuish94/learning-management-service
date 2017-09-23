@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Handles all the teacher related operations
@@ -25,9 +27,9 @@ public class TeacherService {
      *
      * @return all teachers
      */
-    public List<Teacher> getAllTeachers() {
+    public Set<Teacher> getAllTeachers() {
 
-        List<Teacher> teachers = new ArrayList<>();
+        Set<Teacher> teachers = new HashSet<>();
 
         teacherRepository.findAll().forEach(teacher -> {
             Teacher retrievedTeacher = new Teacher();
