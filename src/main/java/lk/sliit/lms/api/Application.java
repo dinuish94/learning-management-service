@@ -1,9 +1,14 @@
 package lk.sliit.lms.api;
 
 import lk.sliit.lms.api.models.Course;
+import lk.sliit.lms.api.models.Question;
+import lk.sliit.lms.api.models.Quiz;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.repositories.CourseRepository;
+import lk.sliit.lms.api.repositories.QuestionRepository;
+import lk.sliit.lms.api.repositories.QuizRepository;
 import lk.sliit.lms.api.repositories.StudentRepository;
+import lk.sliit.lms.api.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,20 +29,52 @@ public class Application implements CommandLineRunner {
     }
 
     @Autowired
-    CourseRepository courseRepository;
+    QuestionRepository questionRepository;
 
     @Autowired
-    StudentRepository studentRepository;
+    QuizRepository quizRepository;
+
+    @Autowired
+    QuizService quizService;
+
+    @Autowired
+    CourseRepository courseRepository;
 
     @Override
     public void run(String... strings) throws Exception {
-        Course course = new Course();
-        Student student = new Student();
-        student.setName("Test Student");
-        course.getStudents().add(studentRepository.save(student));
 
+        Course course = new Course();
+        course.setName("Software Engineering I");
         courseRepository.save(course);
 
+        Course course2 = new Course();
+        course2.setName("Software Engineering II");
+        courseRepository.save(course2);
+
+        Course course3 = new Course();
+        course3.setName("Case Studies in Software Engineering");
+        courseRepository.save(course3);
+
+        Course course4 = new Course();
+        course4.setName("Software Project Management");
+        courseRepository.save(course4);
+
+        Quiz quiz = new Quiz();
+        quiz.setCourse(courseRepository.findOne(1L));
+        quiz = quizRepository.save(quiz);
+
+        Question question = new Question();
+        question.addQuestion("Test Answer 1");
+        question.addQuestion("Test Answer 2");
+        question.addQuestion("Test Answer 3");
+        question.addQuestion("Test Answer 4");
+
+        question.setQuiz(quiz);
+
+        question = questionRepository.save(question);
+
+        quiz.addQuestion(question);
+        quizRepository.save(quiz);
     }
 }
 

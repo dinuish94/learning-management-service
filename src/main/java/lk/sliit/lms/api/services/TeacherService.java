@@ -38,6 +38,8 @@ public class TeacherService {
             teachers.add(teacher);
         });
 
+        teacherRepository.save(new Teacher());
+
         return teachers;
     }
 }
