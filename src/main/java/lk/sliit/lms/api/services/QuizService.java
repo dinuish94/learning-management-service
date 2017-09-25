@@ -44,19 +44,21 @@ public class QuizService {
     public void addQuestions(long quizId, List<QuizQuestion> quizQuestions) throws ResourceNotFoundException {
         Quiz quiz = quizRepository.findOne(quizId);
         if (null != quiz) {
-            quizQuestions.forEach(quizQuestion -> quiz.addQuestion(addQuestion(quiz, quizQuestion)));
+            quizQuestions.forEach(quizQuestion -> quiz.addQuestion(addQuestion(quizId, quizQuestion)));
         }
         throw new ResourceNotFoundException();
 
     }
 
-    public Question addQuestion(Quiz quiz, QuizQuestion quizQuestion) {
+    public Question addQuestion(long quizId, QuizQuestion quizQuestion) {
+        Quiz quiz = quizRepository.findOne(quizId);
 
         Question question = new Question();
         question.setQuiz(quiz);
         question.setAnswers(quizQuestion.getAnswers());
         question.setCorrectAnswer(quizQuestion.getCorrectAnswer());
         question.setQuestion(quizQuestion.getQuestion());
+        System.out.println(question.getQuestion());
 
         return questionRepository.save(question);
 

@@ -3,6 +3,7 @@ package lk.sliit.lms.api.controllers;
 import lk.sliit.lms.api.dto.QuizDTO;
 import lk.sliit.lms.api.dto.QuizQuestion;
 import lk.sliit.lms.api.exceptions.ResourceNotFoundException;
+import lk.sliit.lms.api.models.Question;
 import lk.sliit.lms.api.models.Quiz;
 import lk.sliit.lms.api.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,8 @@ public class QuizController {
 
     @PostMapping("/{id}/questions/")
     @ResponseBody
-    public void addQuestionsToQuiz(@PathVariable("id") long quizId, List<QuizQuestion> quizQuestions) throws ResourceNotFoundException {
-        quizService.addQuestions(quizId, quizQuestions);
+    public Question addQuestionsToQuiz(@PathVariable("id") long quizId, @RequestBody QuizQuestion quizQuestions) throws ResourceNotFoundException {
+        return quizService.addQuestion(quizId, quizQuestions);
     }
 
 }
