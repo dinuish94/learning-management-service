@@ -11,19 +11,20 @@ import java.util.List;
  * Created by Jonathan on 9/26/2017.
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class CourseController {
 
     @Autowired
     private CourseService courseService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @RequestMapping(value = "/courses", method = RequestMethod.GET)
     @ResponseBody
     public List<Course> getAllCourses(){
         return courseService.getAllCourses();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @RequestMapping(value = "/courses/{courseId}", method = RequestMethod.GET)
     @ResponseBody
     public Course getCourse(@PathVariable("courseId") String courseId){
