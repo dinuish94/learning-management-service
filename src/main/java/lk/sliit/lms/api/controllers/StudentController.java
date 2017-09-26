@@ -1,5 +1,7 @@
 package lk.sliit.lms.api.controllers;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import lk.sliit.lms.api.models.Enrollment;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +32,16 @@ public class StudentController {
         return studentService.getCourse(studentId);
     }
 
+    @RequestMapping(value = "/students/courses", method = RequestMethod.POST)
+    @ResponseBody
+    public void enrollStudent(@RequestBody Enrollment enrollment){
+        studentService.enroll(enrollment);
+    }
+
+    @RequestMapping(value = "/students/courses", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void unEnrollStudent(@RequestBody Enrollment enrollment){
+        studentService.unEnroll(enrollment);
+    }
 
 }
