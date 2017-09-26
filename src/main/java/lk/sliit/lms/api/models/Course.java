@@ -21,6 +21,25 @@ public class Course{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cId;
 
+    private String description;
+    private String title;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @ManyToMany
     @JoinTable(name = "student_course", joinColumns = @JoinColumn(name = "course_id",referencedColumnName = "cId"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "sId"))
     private Set<Student> students;
