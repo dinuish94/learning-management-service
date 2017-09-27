@@ -16,16 +16,12 @@ public class LoginService {
 
     @Autowired
     UserRepository userRepo;
-
-    User authUser;
-
     public List<User> users= new ArrayList<>();
 
     public User authenticateUser(User user){
-
+        User authUser = new User();
         userRepo.findAll().forEach(userdb -> {
-            if(user.getId()==userdb.getId() && user.getPassword().equals(userdb.getPassword())){
-                authUser = new User();
+            if(user.getId().intValue()==userdb.getId().intValue() && user.getPassword().equals(userdb.getPassword())){
                 authUser.setId(userdb.getId());
                 authUser.setPassword(userdb.getPassword());
                 authUser.setRole(userdb.getRole());

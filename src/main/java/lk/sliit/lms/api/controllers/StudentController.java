@@ -29,8 +29,8 @@ public class StudentController {
 
     @RequestMapping(value = "/students/{studentId}", method = RequestMethod.GET)
     @ResponseBody
-    public Student getCourse(@PathVariable("studentId") String studentId){
-        return studentService.getCourse(studentId);
+    public Student getStudent(@PathVariable("studentId") String studentId){
+        return studentService.getStudent(studentId);
     }
 
     @RequestMapping(value = "/students/courses", method = RequestMethod.POST)
