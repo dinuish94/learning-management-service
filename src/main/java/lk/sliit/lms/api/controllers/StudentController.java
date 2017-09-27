@@ -5,6 +5,7 @@ import lk.sliit.lms.api.models.Enrollment;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,14 +35,15 @@ public class StudentController {
 
     @RequestMapping(value = "/students/courses", method = RequestMethod.POST)
     @ResponseBody
-    public void enrollStudent(@RequestBody Enrollment enrollment){
-        studentService.enroll(enrollment);
+    public ResponseEntity<String> enrollStudent(@RequestBody Enrollment enrollment){
+        return studentService.enroll(enrollment);
     }
+    
 
-    @RequestMapping(value = "/students/courses", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/students/{sId}/courses/{cId}", method = RequestMethod.DELETE)
     @ResponseBody
-    public void unEnrollStudent(@RequestBody Enrollment enrollment){
-        studentService.unEnroll(enrollment);
+    public ResponseEntity<String> unEnrollStudent(@PathVariable("sId") String studentId,@PathVariable("cId") String courseId ){
+        return studentService.unEnroll(studentId,courseId);
     }
 
 }

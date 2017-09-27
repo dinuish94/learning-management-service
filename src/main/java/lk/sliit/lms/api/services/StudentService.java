@@ -8,6 +8,8 @@ import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.repositories.CourseRepository;
 import lk.sliit.lms.api.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,27 +45,24 @@ public class StudentService {
         return student;
     }
 
-    public void enroll(Enrollment enrollment){
+    public ResponseEntity<String> enroll(Enrollment enrollment){
 
         Student student = studentRepo.findOne(enrollment.getsId());
         Course course = courseRepo.findOne(enrollment.getcId());
         course.getStudents().add(student);
         courseRepo.save(course);
-//        studentRepo.save(student);
-
-//        course.setStudents(new HashSet<Student>(){{
-//            add(student);
-//        }});
-//        courseRepo.save(course);
-
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    public void unEnroll(Enrollment enrollment){
+    public ResponseEntity<String> unEnroll(String studentId, String courseId){
 
-        Student student = studentRepo.findOne(enrollment.getsId());
-        Course course = courseRepo.findOne(enrollment.getcId());
+        long sId = Long.parseLong(studentId);
+        long cId = Long.parseLong(courseId);
+
+        Student student = studentRepo.findOne(sId);
+        Course course = courseRepo.findOne(cId);
         course.getStudents().remove(student);
         courseRepo.save(course);
-
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
