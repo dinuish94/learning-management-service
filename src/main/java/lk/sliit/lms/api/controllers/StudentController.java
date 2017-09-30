@@ -1,6 +1,5 @@
 package lk.sliit.lms.api.controllers;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import lk.sliit.lms.api.models.Enrollment;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.services.StudentService;
@@ -14,6 +13,7 @@ import java.util.List;
  * Created by Jonathan on 9/26/2017.
  */
 @RestController
+@RequestMapping(value = "/students")
 @CrossOrigin(origins = "http://localhost:4200")
 public class StudentController {
 
