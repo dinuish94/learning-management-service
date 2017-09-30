@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by dinukshakandasamanage on 9/23/17.
@@ -35,11 +36,13 @@ public class QuizService {
         return quizzes;
     }
 
-    public Quiz createQuiz(QuizDTO quizDTO) {
-        Quiz quiz = quizRepository.save(new Quiz(quizDTO.getName(), courseRepository.findOne(quizDTO.getCourse())));
-        System.out.println(quiz.toString());
+    public Quiz getAllQuestionsForQuiz(Long qId){
+        return quizRepository.findOne(qId);
+    }
 
-    return quiz;}
+    public Quiz createQuiz(QuizDTO quizDTO) {
+        return quizRepository.save(new Quiz(quizDTO.getName(), courseRepository.findOne(quizDTO.getCourse())));
+    }
 
     public void addQuestions(long quizId, List<QuizQuestion> quizQuestions) throws ResourceNotFoundException {
         Quiz quiz = quizRepository.findOne(quizId);
@@ -58,9 +61,29 @@ public class QuizService {
         question.setAnswers(quizQuestion.getAnswers());
         question.setCorrectAnswer(quizQuestion.getCorrectAnswer());
         question.setQuestion(quizQuestion.getQuestion());
-        System.out.println(question.getQuestion());
 
         return questionRepository.save(question);
 
+    }
+
+    public void deleteQuestion(Long quizId, Long questionId) {
+        questionRepository.delete(questionId);
+    }
+
+    public Question getQuestionById(Long quizId, Long questionId) {
+        return questionRepository.findOne(questionId);
+    }
+
+    public Question editQuestion(Long quizId, Long questionId, QuizQuestion quizQuestion) {
+        Question question = questionRepository.findOne(questionId);
+        question.setQuiz(quizRepository.findOne(quizId));
+        question.setAnswers(quizQuestion.getAnswers());
+        question.setCorrectAnswer(quizQuestion.getCorrectAnswer());
+        question.setQuestion(quizQuestion.getQuestion());
+        return questionRepository.save(question);
+    }
+
+    public List<Quiz> getAllQuizzesByCourseId(Long courseId) {
+        return getAllQuizzes().stream().filter(quiz -> quiz.getCourse().getcId().equals(courseId)).collect(Collectors.toList());
     }
 }

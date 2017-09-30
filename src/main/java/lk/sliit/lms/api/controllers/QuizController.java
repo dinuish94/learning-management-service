@@ -31,6 +31,12 @@ public class QuizController {
         return quizService.getAllQuizzes();
     }
 
+    @GetMapping("/course/{id}")
+    @ResponseBody()
+    public List<Quiz> getAllQuizzesByCourse(@PathVariable("id") long courseId){
+        return quizService.getAllQuizzesByCourseId(courseId);
+    }
+
     @PostMapping("/")
     @ResponseBody
     public Quiz createQuiz(@RequestBody QuizDTO quizDTO){
@@ -41,6 +47,31 @@ public class QuizController {
     @ResponseBody
     public Question addQuestionsToQuiz(@PathVariable("id") long quizId, @RequestBody QuizQuestion quizQuestions) throws ResourceNotFoundException {
         return quizService.addQuestion(quizId, quizQuestions);
+    }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Quiz getAllQuestionsForQuiz(@PathVariable("id") Long quizId){
+        return quizService.getAllQuestionsForQuiz(quizId);
+    }
+
+    @GetMapping("/{id}/questions/{queId}")
+    @ResponseBody
+    public Question getQuestionById(@PathVariable("id") Long quizId, @PathVariable("queId") Long questionId){
+        return quizService.getQuestionById(quizId, questionId);
+    }
+
+    @DeleteMapping("/{id}/questions/{queId}")
+    @ResponseBody
+    public boolean deleteQuestion(@PathVariable("id") Long quizId, @PathVariable("queId") Long questionId){
+        quizService.deleteQuestion(quizId, questionId);
+        return true;
+    }
+
+    @PutMapping("/{id}/questions/{queId}")
+    @ResponseBody
+    public Question editQuestion(@PathVariable("id") Long quizId,@PathVariable("queId") Long questionId, @RequestBody QuizQuestion quizQuestion){
+        return quizService.editQuestion(quizId,questionId,quizQuestion);
     }
 
 }
