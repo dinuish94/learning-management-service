@@ -40,6 +40,9 @@ public class Application implements CommandLineRunner {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    StudentRepository studentRepository;
+
     @Override
     public void run(String... strings) throws Exception {
 
@@ -53,20 +56,20 @@ public class Application implements CommandLineRunner {
         studentRepository.save(student2);
         course.getStudents().add(studentRepository.save(student));
 
-        Course course = new Course();
-        course.setName("Software Engineering I");
+        Course course2 = new Course();
+        course2.setName("Software Engineering I");
         courseRepository.save(course);
 
-        Course course2 = new Course();
-        course2.setName("Software Engineering II");
+        Course course3 = new Course();
+        course3.setName("Software Engineering II");
         courseRepository.save(course2);
 
-        Course course3 = new Course();
-        course3.setName("Case Studies in Software Engineering");
+        Course course4 = new Course();
+        course4.setName("Case Studies in Software Engineering");
         courseRepository.save(course3);
 
-        Course course4 = new Course();
-        course4.setName("Software Project Management");
+        Course course5 = new Course();
+        course5.setName("Software Project Management");
         courseRepository.save(course4);
 
         Quiz quiz = new Quiz();
