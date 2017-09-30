@@ -44,6 +44,16 @@ public class Application implements CommandLineRunner {
     public void run(String... strings) throws Exception {
 
         Course course = new Course();
+        course.setTitle("IT150");
+        course.setDescription("Software arch");
+        Student student = new Student();
+        student.setName("Test Student");
+        Student student2 = new Student();
+        student2.setName("Jonathan");
+        studentRepository.save(student2);
+        course.getStudents().add(studentRepository.save(student));
+
+        Course course = new Course();
         course.setName("Software Engineering I");
         courseRepository.save(course);
 

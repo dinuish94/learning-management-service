@@ -22,7 +22,9 @@ public class Course{
     private Long cId;
 
     private String name;
-
+    private String description;
+    private String title;
+  
     @ManyToMany
     @JoinTable(name = "student_course", joinColumns = @JoinColumn(name = "course_id",referencedColumnName = "cId"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "sId"))
     private Set<Student> students;
@@ -30,6 +32,22 @@ public class Course{
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Course() {
         this.students = new HashSet<>();
