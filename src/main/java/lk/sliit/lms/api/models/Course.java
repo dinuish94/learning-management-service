@@ -21,8 +21,17 @@ public class Course{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cId;
 
+    private String name;
     private String description;
     private String title;
+  
+    @ManyToMany
+    @JoinTable(name = "student_course", joinColumns = @JoinColumn(name = "course_id",referencedColumnName = "cId"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "sId"))
+    private Set<Student> students;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     public String getDescription() {
         return description;
@@ -40,14 +49,6 @@ public class Course{
         this.title = title;
     }
 
-    @ManyToMany
-    @JoinTable(name = "student_course", joinColumns = @JoinColumn(name = "course_id",referencedColumnName = "cId"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "sId"))
-    private Set<Student> students;
-
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
-
     public Course() {
         this.students = new HashSet<>();
     }
@@ -60,12 +61,28 @@ public class Course{
         this.cId = cId;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Set<Student> getStudents() {
         return students;
     }
 
     public void setStudents(Set<Student> students) {
         this.students = students;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     @Override
