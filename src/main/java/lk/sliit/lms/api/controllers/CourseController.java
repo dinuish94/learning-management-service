@@ -1,12 +1,9 @@
 package lk.sliit.lms.api.controllers;
 
 import lk.sliit.lms.api.models.Course;
-import lk.sliit.lms.api.repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import lk.sliit.lms.api.services.CourseService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,16 +16,13 @@ import java.util.List;
 public class CourseController {
 
     @Autowired
-
-    CourseRepository courseRepository;
+    private CourseService courseService;
 
     @GetMapping("/")
     @ResponseBody()
     public Iterable<Course> getAllQuizzes(){
-        return courseRepository.findAll();
+        return courseService.getAllCourses();
     }
-  
-    private CourseService courseService;
 
 
     @RequestMapping(value = "/courses", method = RequestMethod.GET)
@@ -38,9 +32,9 @@ public class CourseController {
     }
 
 
-    @RequestMapping(value = "/courses/{courseId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
     @ResponseBody
-    public Course getCourse(@PathVariable("courseId") String courseId){
+    public Course getCourse(@PathVariable("courseId") Long courseId){
         return courseService.getCourse(courseId);
     }
 }

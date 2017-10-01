@@ -25,13 +25,10 @@ public class CourseService {
         courseRepo.findAll().forEach(course->{
             courses.add(course);
         });
-        System.out.println(courses);
         return  courses;
     }
 
-    public Course getCourse(String courseId){
-        long id = Long.parseLong(courseId);
-        Course course = courseRepo.findOne(id);
-        return course;
+    public Course getCourse(Long courseId){
+        return courseRepo.findOne(courseId);
     }
 }
