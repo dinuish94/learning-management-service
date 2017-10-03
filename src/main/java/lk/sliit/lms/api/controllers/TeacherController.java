@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ import java.util.*;
  *
  * Created by dinukshakandasamanage on 9/23/17.
  */
-@Controller
+@RestController
 @RequestMapping(path = "/teachers")
 public class TeacherController {
 
