@@ -40,7 +40,6 @@ public class Application implements CommandLineRunner {
         student2.setName("Jonathan");
         studentRepository.save(student2);
         course.getStudents().add(studentRepository.save(student));
-
         courseRepository.save(course);
 
     }

@@ -50,6 +50,7 @@ public class StudentService {
         Course course = courseRepo.findOne(enrollment.getcId());
         course.getStudents().add(student);
         courseRepo.save(course);
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
