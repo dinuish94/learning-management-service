@@ -40,7 +40,6 @@ public class QuizController {
     @PostMapping("/")
     @ResponseBody
     public Quiz createQuiz(@RequestBody QuizDTO quizDTO){
-        System.out.println(quizDTO+"***********");
         return quizService.createQuiz(quizDTO);
     }
 
