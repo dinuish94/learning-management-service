@@ -17,7 +17,6 @@ public class CourseService {
     @Autowired
     CourseRepository courseRepo;
 
-
     private List<Course> courses = new ArrayList<>();
 
     public List<Course> getAllCourses(){

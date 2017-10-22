@@ -33,6 +33,9 @@ public class Course{
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private Set<Assignment> assignments;
+
     public String getDescription() {
         return description;
     }
@@ -83,6 +86,14 @@ public class Course{
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public Set<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(Set<Assignment> assignments) {
+        this.assignments = assignments;
     }
 
     @Override
