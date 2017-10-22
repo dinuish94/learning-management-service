@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by dinukshakandasamanage on 10/22/17.
@@ -26,6 +27,10 @@ public class Assignment {
     private String description;
     private Date startDate;
     private Date endDate;
+
+    @ManyToMany
+    @JoinTable(name = "student_assignments", joinColumns = @JoinColumn(name = "assign_id",referencedColumnName = "assignId"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "sId"))
+    private Set<Student> students;
 
     @JsonIgnore
     @ManyToOne
