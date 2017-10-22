@@ -40,6 +40,7 @@ public class QuizController {
     @PostMapping("/")
     @ResponseBody
     public Quiz createQuiz(@RequestBody QuizDTO quizDTO){
+        System.out.println(quizDTO+"***********");
         return quizService.createQuiz(quizDTO);
     }
 
@@ -72,6 +73,12 @@ public class QuizController {
     @ResponseBody
     public Question editQuestion(@PathVariable("id") Long quizId,@PathVariable("queId") Long questionId, @RequestBody QuizQuestion quizQuestion){
         return quizService.editQuestion(quizId,questionId,quizQuestion);
+    }
+
+    @GetMapping("/{id}/active")
+    @ResponseBody
+    public Quiz markQuizAsActive(@PathVariable("id") Long quizId){
+        return quizService.markQuizAsActive(quizId);
     }
 
 }
