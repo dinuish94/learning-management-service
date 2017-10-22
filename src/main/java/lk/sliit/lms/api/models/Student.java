@@ -24,6 +24,9 @@ public class Student{
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses;
 
+    @ManyToMany(mappedBy = "students")
+    private Set<Assignment> assignments;
+
     public Long getsId() {
         return sId;
     }
@@ -46,6 +49,14 @@ public class Student{
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+    }
+
+    public Set<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(Set<Assignment> assignments) {
+        this.assignments = assignments;
     }
 
     @Override

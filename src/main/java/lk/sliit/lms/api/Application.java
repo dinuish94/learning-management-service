@@ -1,7 +1,9 @@
 package lk.sliit.lms.api;
 
+import lk.sliit.lms.api.dto.AssignmentDTO;
 import lk.sliit.lms.api.models.*;
 import lk.sliit.lms.api.repositories.*;
+import lk.sliit.lms.api.services.AssignmentService;
 import lk.sliit.lms.api.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -38,6 +40,9 @@ public class Application implements CommandLineRunner {
 
     @Autowired
     QuizMarkRepository quizMarkRepository;
+
+    @Autowired
+    AssignmentService assignmentService;
 
     @Override
     public void run(String... strings) throws Exception {
@@ -110,6 +115,11 @@ public class Application implements CommandLineRunner {
         quizMark1.setMarks(1);
         quizMark1.setCorrectQuestions(Q1);
         quizMarkRepository.save(quizMark1);
+
+        AssignmentDTO assignment = new AssignmentDTO();
+        assignment.setCourseId(1L);
+        assignment.setDescription("test assignment");
+        assignmentService.addAssignment(assignment);
     }
 }
 
