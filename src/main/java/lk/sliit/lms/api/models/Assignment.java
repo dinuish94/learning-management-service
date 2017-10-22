@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -28,14 +29,17 @@ public class Assignment {
     private Date startDate;
     private Date endDate;
 
-    @ManyToMany
-    @JoinTable(name = "student_assignments", joinColumns = @JoinColumn(name = "assign_id",referencedColumnName = "assignId"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "sId"))
-    private Set<Student> students;
+//    @ManyToMany
+//    @JoinTable(name = "student_assignments", joinColumns = @JoinColumn(name = "assign_id",referencedColumnName = "assignId"), inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "sId"))
+//    private Set<Student> students;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @OneToMany(mappedBy = "student")
+    private Set<StudentAssignment> student = new HashSet<StudentAssignment>();
 
     public Long getAssignId() {
         return assignId;
@@ -83,5 +87,13 @@ public class Assignment {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Set<StudentAssignment> getStudent() {
+        return student;
+    }
+
+    public void setStudent(Set<StudentAssignment> student) {
+        this.student = student;
     }
 }
