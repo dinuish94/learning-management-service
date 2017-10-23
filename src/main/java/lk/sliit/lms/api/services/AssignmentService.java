@@ -52,4 +52,17 @@ public class AssignmentService {
         course.getAssignments().forEach(assignment -> assignments.add(assignment));
         return assignments;
     }
+
+    public Assignment getAssignmentById(Long assignmentId){
+        return assignmentRepository.findOne(assignmentId);
+    }
+
+    public Assignment updateAssignment(Long assignId, AssignmentDTO assignmentDTO) {
+        Assignment assignment = assignmentRepository.findOne(assignId);
+        assignment.setName(assignmentDTO.getName());
+        assignment.setDescription(assignmentDTO.getDescription());
+        assignment.setStartDate(assignmentDTO.getStartDate());
+        assignment.setEndDate(assignmentDTO.getEndDate());
+        return assignmentRepository.save(assignment);
+    }
 }
