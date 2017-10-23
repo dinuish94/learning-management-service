@@ -96,4 +96,5 @@ public class Assignment {
     public void setStudent(Set<StudentAssignment> student) {
         this.student = student;
     }
+
 }

@@ -119,7 +119,21 @@ public class Application implements CommandLineRunner {
         AssignmentDTO assignment = new AssignmentDTO();
         assignment.setCourseId(1L);
         assignment.setDescription("test assignment");
-        assignmentService.addAssignment(assignment);
+        Assignment assignment1 = assignmentService.addAssignment(assignment);
+
+        Student student1 = new Student();
+        student1.setName("Dinu");
+
+        StudentAssignment studentAssignment = new StudentAssignment();
+        studentAssignment.setStudent( studentRepository.save(student1));
+        studentAssignment.setAssignment(assignment1);
+
+        student1.addStudentAssignment(studentAssignment);
+
+        studentRepository.save(student1);
+        assignmentService.getAllAssignments().forEach(x -> {
+            System.out.println("Assignment"+x.getAssignId());
+        });
     }
 }
 

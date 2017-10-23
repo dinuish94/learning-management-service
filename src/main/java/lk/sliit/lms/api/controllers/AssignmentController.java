@@ -31,4 +31,16 @@ public class AssignmentController {
     public Assignment addNewAssignment(@RequestBody AssignmentDTO assignmentDTO){
         return assignmentService.addAssignment(assignmentDTO);
     }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Assignment getAssignmentById(@PathVariable("id") Long assignId){
+        return assignmentService.getAssignmentById(assignId);
+    }
+
+    @PutMapping("/{id}")
+    public Assignment updateAssignmentById(@PathVariable("id") Long assignId, @RequestBody AssignmentDTO assignmentDTO){
+        return assignmentService.updateAssignment(assignId, assignmentDTO);
+
+    }
 }
