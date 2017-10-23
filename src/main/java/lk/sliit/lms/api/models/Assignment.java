@@ -39,7 +39,11 @@ public class Assignment {
     private Course course;
 
     @OneToMany(mappedBy = "student")
-    private Set<StudentAssignment> student = new HashSet<StudentAssignment>();
+    private Set<StudentAssignment> studentAssignments;
+
+//    public Assignment() {
+//        student = new HashSet<StudentAssignment>();
+//    }
 
     public Long getAssignId() {
         return assignId;
@@ -90,11 +94,11 @@ public class Assignment {
     }
 
     public Set<StudentAssignment> getStudent() {
-        return student;
+        return studentAssignments;
     }
 
-    public void setStudent(Set<StudentAssignment> student) {
-        this.student = student;
+    public void setStudent(Set<StudentAssignment> studentAssignments) {
+        this.studentAssignments = studentAssignments;
     }
 
 }

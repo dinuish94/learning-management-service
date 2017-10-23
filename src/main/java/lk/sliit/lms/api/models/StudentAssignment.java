@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class StudentAssignment {
 
     @EmbeddedId
-    private StudentAssignmentPK id;
+    private StudentAssignmentPK id = new StudentAssignmentPK();
 
     @ManyToOne
     @MapsId("student_id")
