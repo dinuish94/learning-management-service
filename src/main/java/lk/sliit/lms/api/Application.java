@@ -1,21 +1,16 @@
 package lk.sliit.lms.api;
 
-import lk.sliit.lms.api.models.Course;
-import lk.sliit.lms.api.models.Question;
-import lk.sliit.lms.api.models.Quiz;
-import lk.sliit.lms.api.models.Student;
-import lk.sliit.lms.api.repositories.CourseRepository;
-import lk.sliit.lms.api.repositories.QuestionRepository;
-import lk.sliit.lms.api.repositories.QuizRepository;
-import lk.sliit.lms.api.repositories.StudentRepository;
+import lk.sliit.lms.api.dto.AssignmentDTO;
+import lk.sliit.lms.api.models.*;
+import lk.sliit.lms.api.repositories.*;
+import lk.sliit.lms.api.services.AssignmentService;
 import lk.sliit.lms.api.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Initializing a spring boot application
@@ -42,6 +37,12 @@ public class Application implements CommandLineRunner {
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    QuizMarkRepository quizMarkRepository;
+
+    @Autowired
+    AssignmentService assignmentService;
 
     @Override
     public void run(String... strings) throws Exception {
@@ -90,6 +91,37 @@ public class Application implements CommandLineRunner {
 
         quiz.addQuestion(question);
         quizRepository.save(quiz);
+
+        Question question1 = new Question();
+        question1.addQuestion("Test Answer 1");
+        question1.addQuestion("Test Answer 2");
+        question1.addQuestion("Test Answer 3");
+        question1.addQuestion("Test Answer 4");
+
+        question1.setQuiz(quiz);
+
+        question1 = questionRepository.save(question1);
+
+        quiz.addQuestion(question1);
+        quizRepository.save(quiz);
+
+        List<Question> Q1 = new ArrayList<>();
+
+        Q1.add(question);
+        Q1.add(question1);
+
+
+        QuizMark quizMark1 = new QuizMark();
+        quizMark1.setQuiz(quiz);
+        quizMark1.setStudent(student2);
+        quizMark1.setMarks(1);
+        quizMark1.setCorrectQuestions(Q1);
+        quizMarkRepository.save(quizMark1);
+
+        AssignmentDTO assignment = new AssignmentDTO();
+        assignment.setCourseId(1L);
+        assignment.setDescription("test assignment");
+        assignmentService.addAssignment(assignment);
     }
 }
 
