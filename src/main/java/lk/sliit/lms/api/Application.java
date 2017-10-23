@@ -44,6 +44,9 @@ public class Application implements CommandLineRunner {
     @Autowired
     AssignmentService assignmentService;
 
+    @Autowired
+    StudentAssignmentRepository studentAssignmentRepository;
+
     @Override
     public void run(String... strings) throws Exception {
 
@@ -130,12 +133,15 @@ public class Application implements CommandLineRunner {
         studentAssignment.setStudent( studentRepository.save(student1));
         studentAssignment.setAssignment(assignment1);
 
-        student1.addStudentAssignment(studentAssignment);
+        studentAssignment = studentAssignmentRepository.save(studentAssignment);
+
+        Set<StudentAssignment> studentAssignments = new HashSet<StudentAssignment>(Arrays.asList(studentAssignment));
+
+        student1.setStudentAssignment(studentAssignments);
 
         studentRepository.save(student1);
-        assignmentService.getAllAssignments().forEach(x -> {
-            System.out.println("Assignment"+x.getAssignId());
-        });
+
+
     }
 }
 
