@@ -57,8 +57,10 @@ public class Application implements CommandLineRunner {
         studentRepository.save(student2);
         course.getStudents().add(studentRepository.save(student));
 
+
         Course course2 = new Course();
         course2.setName("Software Engineering I");
+
         courseRepository.save(course);
 
         Course course3 = new Course();
