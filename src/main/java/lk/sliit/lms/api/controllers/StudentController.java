@@ -20,27 +20,25 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-
-    @RequestMapping(value = "/students", method = RequestMethod.GET)
+    @GetMapping("")
     @ResponseBody
     public List<Student> getAllStudents(){
         return studentService.getAllStudents();
     }
 
-    @RequestMapping(value = "/students/{studentId}", method = RequestMethod.GET)
+    @GetMapping("/{studentId}")
     @ResponseBody
     public Student getStudent(@PathVariable("studentId") String studentId){
         return studentService.getStudent(studentId);
     }
 
-    @RequestMapping(value = "/students/courses", method = RequestMethod.POST)
+    @PostMapping("/courses")
     @ResponseBody
     public ResponseEntity<String> enrollStudent(@RequestBody Enrollment enrollment){
         return studentService.enroll(enrollment);
     }
-    
 
-    @RequestMapping(value = "/students/{sId}/courses/{cId}", method = RequestMethod.DELETE)
+    @DeleteMapping("/{sId}/courses/{cId}")
     @ResponseBody
     public ResponseEntity<String> unEnrollStudent(@PathVariable("sId") String studentId,@PathVariable("cId") String courseId ){
         return studentService.unEnroll(studentId,courseId);

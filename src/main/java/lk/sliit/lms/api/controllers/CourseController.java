@@ -30,20 +30,19 @@ public class CourseController {
     }
 
 
-    @RequestMapping(value = "/courses", method = RequestMethod.GET)
+    @GetMapping("")
     @ResponseBody
     public List<Course> getAllCourses(){
         return courseService.getAllCourses();
     }
 
-
-    @RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
+    @GetMapping("/{courseId}")
     @ResponseBody
     public Course getCourse(@PathVariable("courseId") Long courseId){
         return courseService.getCourse(courseId);
     }
 
-    @RequestMapping(value = "/{courseId}/assignments", method = RequestMethod.GET)
+    @GetMapping("/{courseId}/assignments")
     @ResponseBody
     public List<Assignment> getCourseAssignments(@PathVariable("courseId") Long courseId){
         return assignmentService.getAllAssignmentsForCourse(courseId);

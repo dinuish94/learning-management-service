@@ -10,7 +10,8 @@ import javax.persistence.*;
 public class StudentAssignment {
 
     @EmbeddedId
-    private StudentAssignmentPK id;
+    private StudentAssignmentPK id = new StudentAssignmentPK();
+
 
     @ManyToOne
     @MapsId("student_id")
@@ -24,6 +25,17 @@ public class StudentAssignment {
 
     @Column(name = "grade")
     private double marks;
+
+    @Column(name = "file")
+    private String file;
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
 
     public StudentAssignmentPK getId() {
         return id;
@@ -55,5 +67,16 @@ public class StudentAssignment {
 
     public void setMarks(double marks) {
         this.marks = marks;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentAssignment{" +
+                "id=" + id +
+                ", student=" + student +
+                ", assignment=" + assignment +
+                ", marks=" + marks +
+                ", file='" + file + '\'' +
+                '}';
     }
 }

@@ -1,10 +1,13 @@
 package lk.sliit.lms.api.controllers;
 
 import lk.sliit.lms.api.dto.AssignmentDTO;
+import lk.sliit.lms.api.dto.AssignmentUploadDTO;
 import lk.sliit.lms.api.models.Assignment;
 import lk.sliit.lms.api.services.AssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,5 +33,16 @@ public class AssignmentController {
     @ResponseBody
     public Assignment addNewAssignment(@RequestBody AssignmentDTO assignmentDTO){
         return assignmentService.addAssignment(assignmentDTO);
+    }
+
+
+    @PostMapping("/student")
+    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam long assignId, @RequestParam long sId) {
+        AssignmentUploadDTO assignmentDTO = new AssignmentUploadDTO();
+        assignmentDTO.setAssignId(assignId);
+        assignmentDTO.setsId(sId);
+        String fileLocation=assignmentService.store(file);
+        assignmentDTO.setFile(fileLocation);
+        return assignmentService.uploadAssignmentDetails(assignmentDTO);
     }
 }
