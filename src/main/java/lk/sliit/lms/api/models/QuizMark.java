@@ -30,15 +30,15 @@ public class QuizMark {
 
     @OneToMany
     @JoinColumn(name = "correctQuestions")
-    private List<Question> correctQuestions;
+    private List<AnsweredQuestion> answeredQuestions;
 
     public QuizMark() {}
 
-    public QuizMark(long marks, Quiz quiz, Student student, List<Question> correctQuestions) {
+    public QuizMark(long marks, Quiz quiz, Student student, List<AnsweredQuestion> answeredQuestions) {
         this.marks = marks;
         this.quiz = quiz;
         this.student = student;
-        this.correctQuestions = correctQuestions;
+        this.answeredQuestions = answeredQuestions;
     }
 
     public Long getQmId() {
@@ -73,12 +73,12 @@ public class QuizMark {
         this.student = student;
     }
 
-    public List<Question> getCorrectQuestions() {
-        return correctQuestions;
+    public List<AnsweredQuestion> getAnsweredQuestions() {
+        return answeredQuestions;
     }
 
-    public void setCorrectQuestions(List<Question> correctQuestions) {
-        this.correctQuestions = correctQuestions;
+    public void setAnsweredQuestions(List<AnsweredQuestion> correctQuestions) {
+        this.answeredQuestions = correctQuestions;
     }
 
 
