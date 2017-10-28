@@ -24,6 +24,7 @@ public class CourseService {
         courseRepo.findAll().forEach(course->{
             courses.add(course);
         });
+        System.out.print(courses);
         return  courses;
     }
 

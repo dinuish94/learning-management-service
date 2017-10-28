@@ -47,4 +47,5 @@ public class CourseController {
     public List<Assignment> getCourseAssignments(@PathVariable("courseId") Long courseId){
         return assignmentService.getAllAssignmentsForCourse(courseId);
     }
+
 }

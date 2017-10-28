@@ -5,7 +5,9 @@ import jdk.nashorn.internal.parser.JSONParser;
 import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.models.Enrollment;
 import lk.sliit.lms.api.models.Student;
+import lk.sliit.lms.api.models.StudentAssignment;
 import lk.sliit.lms.api.repositories.CourseRepository;
+import lk.sliit.lms.api.repositories.StudentAssignmentRepository;
 import lk.sliit.lms.api.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,9 @@ public class StudentService {
 
     @Autowired
     CourseRepository courseRepo;
+
+    @Autowired
+    StudentAssignmentRepository studentAssignmentRepository;
 
     public List<Student> getAllStudents(){
         List<Student> students = new ArrayList<>();
@@ -64,5 +69,12 @@ public class StudentService {
         course.getStudents().remove(student);
         courseRepo.save(course);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    public List<StudentAssignment> getAllAssignmentsForStudent(String studentId){
+        Student student = studentRepo.findOne(Long.parseLong(studentId));
+        List<StudentAssignment> studentAssignments = new ArrayList<>();
+        student.getStudentAssignment().forEach(studentAssignment -> studentAssignments.add(studentAssignment));
+        return studentAssignments;
     }
 }

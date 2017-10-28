@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,6 +37,9 @@ public class AssignmentService {
 
     @Autowired
     StudentAssignmentRepository studentAssignmentRepository;
+
+    @Autowired
+    ServletContext context;
 
 
     private final Path rootLocation = Paths.get("upload-dir");
@@ -81,6 +85,8 @@ public class AssignmentService {
         studentAssignment = studentAssignmentRepository.save(studentAssignment);
         student.getStudentAssignment().add(studentAssignment);
 
+        System.out.println("Assignment Service");
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -88,6 +94,8 @@ public class AssignmentService {
         try {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(file.getOriginalFilename());
+          //  Path path = Paths.get(rootLocation+file.getOriginalFilename());
+           // Path path = Paths.get(context.getRealPath("uploads") + file.getOriginalFilename());
             Files.write(path, bytes);
             return path.toString();
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package lk.sliit.lms.api.controllers;
 
 import lk.sliit.lms.api.models.Enrollment;
 import lk.sliit.lms.api.models.Student;
+import lk.sliit.lms.api.models.StudentAssignment;
 import lk.sliit.lms.api.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,4 +45,10 @@ public class StudentController {
         return studentService.unEnroll(studentId,courseId);
     }
 
+
+    @GetMapping("/{studentId}/assignments")
+    @ResponseBody
+    public List<StudentAssignment> getAllAssignmentsForStudent(@PathVariable("studentId") String studentId){
+        return studentService.getAllAssignmentsForStudent(studentId);
+    }
 }
