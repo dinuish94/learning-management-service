@@ -1,10 +1,8 @@
 package lk.sliit.lms.api.services;
 
+import lk.sliit.lms.api.dto.AnsweredQuestionDTO;
 import lk.sliit.lms.api.dto.QuizMarkDTO;
-import lk.sliit.lms.api.models.Question;
-import lk.sliit.lms.api.models.Quiz;
-import lk.sliit.lms.api.models.QuizMark;
-import lk.sliit.lms.api.models.Student;
+import lk.sliit.lms.api.models.*;
 import lk.sliit.lms.api.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +31,11 @@ public class QuizMarkService {
     @Autowired
     QuestionRepository questionRepository;
 
+    @Autowired
+    AnsweredQuestionRepository answeredQuestionRepository;
+
+    QuizMark quizMark;
+
     public QuizMark addMarks(QuizMarkDTO quizMarkDTO){
 
         QuizMark quizMark = new QuizMark();
@@ -41,15 +44,25 @@ public class QuizMarkService {
         Quiz quiz = quizRepository.findOne(quizMarkDTO.getQuiz());
 
        List<Question> questions = new ArrayList<>();
+       List<AnsweredQuestion> answeredQuestions = new ArrayList<>();
+       AnsweredQuestion answeredQuestion;
 
-        for(int i=0;i<quizMarkDTO.getCorrectQuestions().length;i++) {
-            questions.add(questionRepository.findOne(quizMarkDTO.getCorrectQuestions()[i]));
+        Long questionId;
+        String selectedAnswer;
+
+        for(int i=0;i<quizMarkDTO.getAnsweredQuestions().size();i++) {
+            questionId = quizMarkDTO.getAnsweredQuestions().get(i).getQuestion();
+            selectedAnswer = quizMarkDTO.getAnsweredQuestions().get(i).getSelectedAnswer();
+
+            answeredQuestion = new AnsweredQuestion(questionRepository.findOne(questionId),selectedAnswer);
+            answeredQuestion = answeredQuestionRepository.save(answeredQuestion);
+            answeredQuestions.add(answeredQuestion);
         }
 
         quizMark.setMarks(quizMarkDTO.getMarks());
         quizMark.setStudent(student);
         quizMark.setQuiz(quiz);
-        quizMark.setCorrectQuestions(questions);
+        quizMark.setAnsweredQuestions(answeredQuestions);
 
         quizMark = quizMarkRepository.save(quizMark);
 
@@ -59,10 +72,16 @@ public class QuizMarkService {
     }
 
 
-    public Iterable<QuizMark> getMarks(){
-        return quizMarkRepository.findAll();
-
+    public QuizMark getMark(Long quizId,Long studentId){
+        quizMark = new QuizMark();
+        quizMarkRepository.findAll().forEach(quizM -> {
+            if ((quizM.getQuiz().getqId() == quizId) && (quizM.getStudent().getsId() == studentId)) {
+                quizMark = quizM;
+            }
+        });
+        return quizMark;
     }
+
 
     public Student getQuizMark(QuizMarkDTO quizMarkDTO) {
         return studentRepository.findOne(quizMarkDTO.getStudent());

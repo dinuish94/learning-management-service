@@ -18,7 +18,7 @@ import java.util.List;
  * Created by kashifroshen on 10/21/17.
  */
 @RestController
-@RequestMapping(path = "/quizmarks")
+@RequestMapping(path = "/quizzes/{quizId}/students/{studentId}/quizmarks")
 @CrossOrigin(origins = "*")
 public class QuizMarkController {
     @Autowired
@@ -28,7 +28,9 @@ public class QuizMarkController {
 
     @GetMapping("")
     @ResponseBody()
-    public Iterable<QuizMark> getAllQuizzes(){return quizMarksService.getMarks();
+    public QuizMark getAllQuizzes(@PathVariable("quizId") Long quizId,@PathVariable("studentId") Long studentId){
+        return quizMarksService.getMark(quizId, studentId);
+
     }
 
     @PostMapping("")
