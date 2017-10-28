@@ -41,7 +41,10 @@ public class QuizService {
     }
 
     public Quiz createQuiz(QuizDTO quizDTO) {
-        return quizRepository.save(new Quiz(quizDTO.getName(), courseRepository.findOne(quizDTO.getCourse())));
+        Quiz quiz = new Quiz(quizDTO.getName(), courseRepository.findOne(quizDTO.getCourse()));
+        quiz.setDate(quizDTO.getDate());
+        quiz.setDuration(quizDTO.getDuration());
+        return quizRepository.save(quiz);
     }
 
     public void addQuestions(long quizId, List<QuizQuestion> quizQuestions) throws ResourceNotFoundException {
@@ -85,5 +88,14 @@ public class QuizService {
 
     public List<Quiz> getAllQuizzesByCourseId(Long courseId) {
         return getAllQuizzes().stream().filter(quiz -> quiz.getCourse().getcId().equals(courseId)).collect(Collectors.toList());
+    }
+
+    public Quiz markQuizAsActive(Long quizId) {
+        Quiz quiz = quizRepository.findOne(quizId);
+        if(quiz.isActive())
+            quiz.setActive(false);
+        else
+            quiz.setActive(true);
+        return quizRepository.save(quiz);
     }
 }

@@ -28,18 +28,17 @@ public class StudentService {
     @Autowired
     CourseRepository courseRepo;
 
-    private List<Student> students = new ArrayList<>();
-
     public List<Student> getAllStudents(){
+        List<Student> students = new ArrayList<>();
         students.clear();
         studentRepo.findAll().forEach(student->{
             students.add(student);
         });
         System.out.println(students);
-        return  students;
+        return students;
     }
 
-    public Student getCourse(String studentId){
+    public Student getStudent(String studentId){
         long id = Long.parseLong(studentId);
         Student student = studentRepo.findOne(id);
         return student;
@@ -51,6 +50,7 @@ public class StudentService {
         Course course = courseRepo.findOne(enrollment.getcId());
         course.getStudents().add(student);
         courseRepo.save(course);
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

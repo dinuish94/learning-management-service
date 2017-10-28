@@ -3,6 +3,7 @@ package lk.sliit.lms.api.models;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,6 +24,9 @@ public class Student{
 
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses;
+
+    @OneToMany(mappedBy = "assignment")
+    private Set<StudentAssignment> studentAssignment = new HashSet<StudentAssignment>();
 
     public Long getsId() {
         return sId;
@@ -46,6 +50,18 @@ public class Student{
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+    }
+
+    public Set<StudentAssignment> getStudentAssignment() {
+        return studentAssignment;
+    }
+
+    public void setStudentAssignment(Set<StudentAssignment> studentAssignment) {
+        this.studentAssignment = studentAssignment;
+    }
+
+    public void addStudentAssignment(StudentAssignment studentAssignment){
+        this.studentAssignment.add(studentAssignment);
     }
 
     @Override

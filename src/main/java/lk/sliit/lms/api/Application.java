@@ -1,7 +1,9 @@
 package lk.sliit.lms.api;
 
+import lk.sliit.lms.api.dto.AssignmentDTO;
 import lk.sliit.lms.api.models.*;
 import lk.sliit.lms.api.repositories.*;
+import lk.sliit.lms.api.services.AssignmentService;
 import lk.sliit.lms.api.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -41,6 +43,11 @@ public class Application implements CommandLineRunner {
 
     @Autowired
     AnsweredQuestionRepository answeredQuestionRepository;
+    @Autowired
+    AssignmentService assignmentService;
+
+    @Autowired
+    StudentAssignmentRepository studentAssignmentRepository;
 
     @Override
     public void run(String... strings) throws Exception {
@@ -55,8 +62,10 @@ public class Application implements CommandLineRunner {
         studentRepository.save(student2);
         course.getStudents().add(studentRepository.save(student));
 
+
         Course course2 = new Course();
         course2.setName("Software Engineering I");
+
         courseRepository.save(course);
 
         Course course3 = new Course();
@@ -230,6 +239,28 @@ public class Application implements CommandLineRunner {
         quizMark1.setMarks(1);
         quizMark1.setAnsweredQuestions(Q2);
         quizMarkRepository.save(quizMark1);
+
+        AssignmentDTO assignment = new AssignmentDTO();
+        assignment.setCourseId(1L);
+        assignment.setDescription("test assignment");
+        Assignment assignment1 = assignmentService.addAssignment(assignment);
+
+        Student student1 = new Student();
+        student1.setName("Dinu");
+
+        StudentAssignment studentAssignment = new StudentAssignment();
+        studentAssignment.setStudent( studentRepository.save(student1));
+        studentAssignment.setAssignment(assignment1);
+
+        studentAssignment = studentAssignmentRepository.save(studentAssignment);
+
+        Set<StudentAssignment> studentAssignments = new HashSet<StudentAssignment>(Arrays.asList(studentAssignment));
+
+        student1.setStudentAssignment(studentAssignments);
+
+        studentRepository.save(student1);
+
+
     }
 }
 

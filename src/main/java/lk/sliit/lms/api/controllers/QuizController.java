@@ -74,4 +74,10 @@ public class QuizController {
         return quizService.editQuestion(quizId,questionId,quizQuestion);
     }
 
+    @GetMapping("/{id}/active")
+    @ResponseBody
+    public Quiz markQuizAsActive(@PathVariable("id") Long quizId){
+        return quizService.markQuizAsActive(quizId);
+    }
+
 }
