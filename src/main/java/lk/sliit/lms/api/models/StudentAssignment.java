@@ -1,5 +1,7 @@
 package lk.sliit.lms.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -9,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "student_assignment")
 public class StudentAssignment {
 
+    @JsonIgnore
     @EmbeddedId
     private StudentAssignmentPK id = new StudentAssignmentPK();
 

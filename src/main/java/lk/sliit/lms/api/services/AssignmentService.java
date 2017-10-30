@@ -82,10 +82,13 @@ public class AssignmentService {
         studentAssignment.setStudent(student);
         studentAssignment.setFile(assignmentDTO.getFile());
 
+
         studentAssignment = studentAssignmentRepository.save(studentAssignment);
         student.getStudentAssignment().add(studentAssignment);
+        studentRepository.save(student);
 
         System.out.println("Assignment Service");
+     //   System.out.println(studentAssignment);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -93,14 +96,14 @@ public class AssignmentService {
     public String store(MultipartFile file){
         try {
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(file.getOriginalFilename());
+            Path path = Paths.get("src\\main\\java\\lk\\sliit\\lms\\api\\assignments\\",file.getOriginalFilename());
           //  Path path = Paths.get(rootLocation+file.getOriginalFilename());
            // Path path = Paths.get(context.getRealPath("uploads") + file.getOriginalFilename());
             Files.write(path, bytes);
             return path.toString();
         } catch (Exception e) {
             System.out.println(file);
-            throw new RuntimeException("FAIL!");
+            throw new RuntimeException("FAIL!",e);
         }
     }
 }

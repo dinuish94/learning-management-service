@@ -1,5 +1,6 @@
 package lk.sliit.lms.api.controllers;
 
+import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.models.Assignment;
 import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.services.AssignmentService;
@@ -32,8 +33,8 @@ public class CourseController {
 
     @GetMapping("")
     @ResponseBody
-    public List<Course> getAllCourses(){
-        return courseService.getAllCourses();
+    public List<CourseDTO> getAllCourses(){
+        return courseService.getAllCoursesDTO();
     }
 
     @GetMapping("/{courseId}")

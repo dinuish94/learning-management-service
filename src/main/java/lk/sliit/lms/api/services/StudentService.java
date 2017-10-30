@@ -76,5 +76,6 @@ public class StudentService {
         List<StudentAssignment> studentAssignments = new ArrayList<>();
         student.getStudentAssignment().forEach(studentAssignment -> studentAssignments.add(studentAssignment));
         return studentAssignments;
+
     }
 }
