@@ -65,4 +65,15 @@ public class StudentService {
         courseRepo.save(course);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    public Student createStudent(Student student){
+        
+        return studentRepo.save(student);
+    }
+        
+    public void deleteStudent(Long sId){
+        
+        Student student = studentRepo.findOne(sId);
+        studentRepo.delete(student);
+    }
 }
