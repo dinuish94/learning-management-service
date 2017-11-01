@@ -60,6 +60,10 @@ public class Student{
         this.studentAssignment = studentAssignment;
     }
 
+    public void addStudentAssignment(StudentAssignment studentAssignment){
+        this.studentAssignment.add(studentAssignment);
+    }
+
     @Override
     public String toString() {
         return "Student{" +

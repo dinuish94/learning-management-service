@@ -36,7 +36,6 @@ public class AssignmentController {
         return assignmentService.addAssignment(assignmentDTO);
     }
 
-
     @PostMapping("/student")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam String assignId, @RequestParam String sId) {
         System.out.println("Controller");
@@ -50,4 +49,15 @@ public class AssignmentController {
         return assignmentService.uploadAssignmentDetails(assignmentDTO);
     }
 
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Assignment getAssignmentById(@PathVariable("id") Long assignId){
+        return assignmentService.getAssignmentById(assignId);
+    }
+
+    @PutMapping("/{id}")
+    public Assignment updateAssignmentById(@PathVariable("id") Long assignId, @RequestBody AssignmentDTO assignmentDTO){
+        return assignmentService.updateAssignment(assignId, assignmentDTO);
+
+    }
 }

@@ -15,7 +15,6 @@ public class StudentAssignment {
     @EmbeddedId
     private StudentAssignmentPK id = new StudentAssignmentPK();
 
-
     @ManyToOne
     @MapsId("student_id")
     @JoinColumn(name = "student_id", referencedColumnName = "sId")

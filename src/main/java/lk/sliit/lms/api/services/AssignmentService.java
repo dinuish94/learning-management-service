@@ -121,5 +121,17 @@ public class AssignmentService {
             System.out.println(file);
             throw new RuntimeException("FAIL!",e);
         }
+      
+    public Assignment getAssignmentById(Long assignmentId){
+        return assignmentRepository.findOne(assignmentId);
+    }
+
+    public Assignment updateAssignment(Long assignId, AssignmentDTO assignmentDTO) {
+        Assignment assignment = assignmentRepository.findOne(assignId);
+        assignment.setName(assignmentDTO.getName());
+        assignment.setDescription(assignmentDTO.getDescription());
+        assignment.setStartDate(assignmentDTO.getStartDate());
+        assignment.setEndDate(assignmentDTO.getEndDate());
+        return assignmentRepository.save(assignment);
     }
 }

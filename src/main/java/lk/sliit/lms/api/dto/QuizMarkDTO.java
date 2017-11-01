@@ -1,6 +1,9 @@
 package lk.sliit.lms.api.dto;
 
+import lk.sliit.lms.api.models.AnsweredQuestion;
+
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by kashifroshen on 10/21/17.
@@ -10,7 +13,7 @@ public class QuizMarkDTO {
     long marks;
     long quiz;
     long student;
-    long correctQuestions[];
+    List<AnsweredQuestionDTO> answeredQuestions;
 
     public long getMarks() {
         return marks;
@@ -36,12 +39,12 @@ public class QuizMarkDTO {
         this.student = student;
     }
 
-    public long[] getCorrectQuestions() {
-        return correctQuestions;
+    public List<AnsweredQuestionDTO> getAnsweredQuestions() {
+        return answeredQuestions;
     }
 
-    public void setCorrectQuestions(long[] correctQuestions) {
-        this.correctQuestions = correctQuestions;
+    public void setAnsweredQuestions(List<AnsweredQuestionDTO> answeredQuestions) {
+        this.answeredQuestions = answeredQuestions;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class QuizMarkDTO {
                 "marks=" + marks +
                 ", quiz=" + quiz +
                 ", student=" + student +
-                ", correctQuestions=" + Arrays.toString(correctQuestions) +
+                ", correctQuestions=" + answeredQuestions +
                 '}';
     }
 }
