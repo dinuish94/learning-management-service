@@ -15,9 +15,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "assignment")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "assignId")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "assignId")
 public class Assignment {
 
     @Id
@@ -38,6 +38,7 @@ public class Assignment {
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "student")
     private Set<StudentAssignment> studentAssignments;
 
@@ -85,6 +86,7 @@ public class Assignment {
         this.endDate = endDate;
     }
 
+    @JsonIgnore
     public Course getCourse() {
         return course;
     }
@@ -93,6 +95,7 @@ public class Assignment {
         this.course = course;
     }
 
+    @JsonIgnore
     public Set<StudentAssignment> getStudent() {
         return studentAssignments;
     }
