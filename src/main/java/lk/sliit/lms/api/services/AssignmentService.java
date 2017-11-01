@@ -74,21 +74,37 @@ public class AssignmentService {
     }
 
     public ResponseEntity<String> uploadAssignmentDetails(AssignmentUploadDTO assignmentDTO){
+        System.out.println("Assignment Service");
+        System.out.println("Student ID : "+assignmentDTO.getsId());
+        System.out.println("Assignment ID : "+assignmentDTO.getAssignId());
 
         Assignment assignment = assignmentRepository.findOne(assignmentDTO.getAssignId());
         Student student = studentRepository.findOne(assignmentDTO.getsId());
+        System.out.println("Retrievd Student ID : "+student.getsId());
+
+//        StudentAssignmentPK pk = new StudentAssignmentPK();
+//        pk.setAssignment_id(assignment.getAssignId());
+//        pk.setStudent_id(student.getsId());
+
         StudentAssignment studentAssignment = new StudentAssignment();
-        studentAssignment.setAssignment(assignment);
         studentAssignment.setStudent(student);
+        studentAssignment.setAssignment(assignment);
         studentAssignment.setFile(assignmentDTO.getFile());
 
 
-        studentAssignment = studentAssignmentRepository.save(studentAssignment);
+//        studentAssignment.setId(pk);
+//        studentAssignment = studentAssignmentRepository.save(studentAssignment);
+//        Set<StudentAssignment> studentAssignments = new HashSet<StudentAssignment>(Arrays.asList(studentAssignment));
+//        student.setStudentAssignment(studentAssignments);
+//        studentRepository.save(student);
+
+        System.out.println("Student assign : ");
+        System.out.println(studentAssignment.getStudent().getsId());
+
+        studentAssignmentRepository.save(studentAssignment);
         student.getStudentAssignment().add(studentAssignment);
         studentRepository.save(student);
 
-        System.out.println("Assignment Service");
-     //   System.out.println(studentAssignment);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

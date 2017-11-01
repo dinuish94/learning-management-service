@@ -1,5 +1,7 @@
 package lk.sliit.lms.api.controllers;
 
+import lk.sliit.lms.api.dto.CourseDTO;
+import lk.sliit.lms.api.dto.StudentAssignmentDTO;
 import lk.sliit.lms.api.models.Enrollment;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.models.StudentAssignment;
@@ -48,7 +50,13 @@ public class StudentController {
 
     @GetMapping("/{studentId}/assignments")
     @ResponseBody
-    public List<StudentAssignment> getAllAssignmentsForStudent(@PathVariable("studentId") String studentId){
+    public List<StudentAssignmentDTO> getAllAssignmentsForStudent(@PathVariable("studentId") String studentId){
         return studentService.getAllAssignmentsForStudent(studentId);
+    }
+
+    @GetMapping("/{studentId}/courses")
+    @ResponseBody
+    public List<CourseDTO> getAllCoursesForStudent(@PathVariable("studentId") String studentId){
+        return studentService.getAllCoursesForStudent(studentId);
     }
 }
