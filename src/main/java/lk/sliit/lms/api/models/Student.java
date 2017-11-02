@@ -28,7 +28,19 @@ public class Student{
     @OneToMany(mappedBy = "assignment")
     private Set<StudentAssignment> studentAssignment = new HashSet<StudentAssignment>();
 
-    public Long getsId() {
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+    public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	public Long getsId() {
         return sId;
     }
 

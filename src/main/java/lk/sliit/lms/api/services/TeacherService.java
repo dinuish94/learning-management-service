@@ -1,8 +1,11 @@
 package lk.sliit.lms.api.services;
 
+import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.models.Teacher;
 import lk.sliit.lms.api.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,5 +44,32 @@ public class TeacherService {
         teacherRepository.save(new Teacher());
 
         return teachers;
+    }
+
+    /***
+     * get details of a teacher
+     *
+     * @return teacher
+     */
+    public Teacher getTeacher (String teacherID) {
+
+        Long id = Long.parseLong(teacherID);
+        Teacher teacher = teacherRepository.findOne(id);
+        return teacher;
+    }
+
+    /**
+     * create a new teacher
+     */
+    public Teacher createTeacher(Teacher teacher){
+
+        return teacherRepository.save(teacher);
+    }
+    /**
+     * delete a new teacher
+     */
+    public void deleteTeacher(Long tId){
+        Teacher teacher = teacherRepository.findOne(tId);
+        teacherRepository.delete(teacher);
     }
 }

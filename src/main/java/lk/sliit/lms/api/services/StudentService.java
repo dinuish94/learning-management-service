@@ -74,6 +74,16 @@ public class StudentService {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    public Student createStudent(Student student){
+        
+        return studentRepo.save(student);
+    }
+        
+    public void deleteStudent(Long sId){
+        
+        Student student = studentRepo.findOne(sId);
+        studentRepo.delete(student);
+    }
 //    public List<StudentAssignment> getAllAssignmentsForStudent(String studentId){
 //        Student student = studentRepo.findOne(Long.parseLong(studentId));
 //        List<StudentAssignment> studentAssignments = new ArrayList<>();
@@ -130,6 +140,4 @@ public class StudentService {
         return courseDTO;
 
     }
-
-
 }
