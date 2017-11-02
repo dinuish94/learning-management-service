@@ -1,6 +1,7 @@
 package lk.sliit.lms.api;
 
 import lk.sliit.lms.api.dto.AssignmentDTO;
+import lk.sliit.lms.api.dto.FeedBackDTO;
 import lk.sliit.lms.api.models.*;
 import lk.sliit.lms.api.repositories.*;
 import lk.sliit.lms.api.services.AssignmentService;
@@ -10,6 +11,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -49,35 +52,55 @@ public class Application implements CommandLineRunner {
     @Autowired
     StudentAssignmentRepository studentAssignmentRepository;
 
+    @Autowired
+    TeacherRepository teacherRepository;
+
+    @Autowired
+    FeedBackQuestionRepository feedBackQuestionRepository;
+
+    @Autowired
+    FeedBackRepository feedBackRepository;
+
     @Override
     public void run(String... strings) throws Exception {
 
         Course course = new Course();
         course.setTitle("IT150");
         course.setDescription("Software arch");
+
         Student student = new Student();
-        student.setName("Test Student");
-        Student student2 = new Student();
-        student2.setName("Jonathan");
-        studentRepository.save(student2);
+        student.setName("Jonathan");
         course.getStudents().add(studentRepository.save(student));
+        courseRepository.save(course);
+
+        Student student2 = new Student();
+        student2.setName("Deon");
+        studentRepository.save(student2);
+
 
 
         Course course2 = new Course();
         course2.setName("Software Engineering I");
+        course2.setTitle("SE101");
+        course2.setDescription("QQQQQ");
 
-        courseRepository.save(course);
 
         Course course3 = new Course();
         course3.setName("Software Engineering II");
+        course3.setTitle("SE123");
+        course3.setDescription("qweee");
         courseRepository.save(course2);
 
         Course course4 = new Course();
         course4.setName("Case Studies in Software Engineering");
+        course4.setDescription("CASE");
+        course4.setTitle("IT123");
         courseRepository.save(course3);
 
         Course course5 = new Course();
         course5.setName("Software Project Management");
+        course5.setTitle("Q011");
+        course5.setDescription("QWER");
         courseRepository.save(course4);
 
         Quiz quiz = new Quiz();
@@ -240,26 +263,70 @@ public class Application implements CommandLineRunner {
         quizMark1.setAnsweredQuestions(Q2);
         quizMarkRepository.save(quizMark1);
 
+
+        String inputString = "11-11-2017";
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date endDate = dateFormat.parse(inputString);
+
         AssignmentDTO assignment = new AssignmentDTO();
         assignment.setCourseId(1L);
         assignment.setDescription("test assignment");
-        Assignment assignment1 = assignmentService.addAssignment(assignment);
 
-        Student student1 = new Student();
-        student1.setName("Dinu");
+        assignment.setEndDate(endDate);
+        assignmentService.addAssignment(assignment);
 
-        StudentAssignment studentAssignment = new StudentAssignment();
-        studentAssignment.setStudent( studentRepository.save(student1));
-        studentAssignment.setAssignment(assignment1);
+        AssignmentDTO assignment2 = new AssignmentDTO();
+        assignment2.setCourseId(1L);
+        assignment2.setDescription("test assignment2");
+        assignment2.setEndDate(endDate);
+        assignmentService.addAssignment(assignment2);
 
-        studentAssignment = studentAssignmentRepository.save(studentAssignment);
+//        Assignment assignment1 = assignmentService.addAssignment(assignment);
+//
+//        Student student1 = new Student();
+//        student1.setName("Dinu");
+//
+//        StudentAssignment studentAssignment = new StudentAssignment();
+//        studentAssignment.setStudent( studentRepository.save(student1));
+//        studentAssignment.setAssignment(assignment1);
+//
+//        studentAssignment = studentAssignmentRepository.save(studentAssignment);
+//
+//        Set<StudentAssignment> studentAssignments = new HashSet<StudentAssignment>(Arrays.asList(studentAssignment));
+//
+//        student1.setStudentAssignment(studentAssignments);
+//
+//        studentRepository.save(student1);
 
-        Set<StudentAssignment> studentAssignments = new HashSet<StudentAssignment>(Arrays.asList(studentAssignment));
+        Teacher t = new Teacher();
+        t.setName("Mr. Nimal");
+        teacherRepository.save(t);
 
-        student1.setStudentAssignment(studentAssignments);
+        List<String> fbQuestionList = new ArrayList<>();
+        fbQuestionList.add("The grade you expect for this module(A/B/C/D/F)");
+        fbQuestionList.add("Is the module content acceptable or not acceptable? If NOT give reasons.");
+        fbQuestionList.add("Does the lecturer come to the lecture on time?");
+        fbQuestionList.add("Does the lecturer answer students question?");
+        fbQuestionList.add("Are subject materials available whenever you need?");
+        fbQuestionList.add("Can students meet the lecturer anytime?");
 
-        studentRepository.save(student1);
-
+        List<FeedBackQuestion> fdqList = new ArrayList<>();
+        FeedBackDTO feedBackDTO = new FeedBackDTO();
+        feedBackDTO.setName("Test Assignment 1");
+        feedBackDTO.setTeacherId(1L);
+        feedBackDTO.setFeedBackQuestions(fbQuestionList);
+        Teacher teacher = teacherRepository.findOne(feedBackDTO.getTeacherId());
+        FeedBack feedBack = new FeedBack();
+        feedBack.setName(feedBackDTO.getName());
+        feedBack.setTeacher(teacher);
+        feedBackDTO.getFeedBackQuestions().forEach(feedBackQuestion -> {
+            FeedBackQuestion fdQ = new FeedBackQuestion();
+            fdQ.setFeedBack(feedBack);
+            fdQ.setQuestion(feedBackQuestion);
+            fdqList.add(fdQ);
+        });
+        feedBackRepository.save(feedBack);
+        feedBackQuestionRepository.save(fdqList);
 
     }
 }
