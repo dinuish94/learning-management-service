@@ -1,6 +1,7 @@
 package lk.sliit.lms.api;
 
 import lk.sliit.lms.api.dto.AssignmentDTO;
+import lk.sliit.lms.api.dto.FeedBackDTO;
 import lk.sliit.lms.api.models.*;
 import lk.sliit.lms.api.repositories.*;
 import lk.sliit.lms.api.services.AssignmentService;
@@ -50,6 +51,15 @@ public class Application implements CommandLineRunner {
 
     @Autowired
     StudentAssignmentRepository studentAssignmentRepository;
+
+    @Autowired
+    TeacherRepository teacherRepository;
+
+    @Autowired
+    FeedBackQuestionRepository feedBackQuestionRepository;
+
+    @Autowired
+    FeedBackRepository feedBackRepository;
 
     @Override
     public void run(String... strings) throws Exception {
@@ -271,22 +281,52 @@ public class Application implements CommandLineRunner {
         assignment2.setEndDate(endDate);
         assignmentService.addAssignment(assignment2);
 
-        Assignment assignment1 = assignmentService.addAssignment(assignment);
+//        Assignment assignment1 = assignmentService.addAssignment(assignment);
+//
+//        Student student1 = new Student();
+//        student1.setName("Dinu");
+//
+//        StudentAssignment studentAssignment = new StudentAssignment();
+//        studentAssignment.setStudent( studentRepository.save(student1));
+//        studentAssignment.setAssignment(assignment1);
+//
+//        studentAssignment = studentAssignmentRepository.save(studentAssignment);
+//
+//        Set<StudentAssignment> studentAssignments = new HashSet<StudentAssignment>(Arrays.asList(studentAssignment));
+//
+//        student1.setStudentAssignment(studentAssignments);
+//
+//        studentRepository.save(student1);
 
-        Student student1 = new Student();
-        student1.setName("Dinu");
+        Teacher t = new Teacher();
+        t.setName("Mr. Nimal");
+        teacherRepository.save(t);
 
-        StudentAssignment studentAssignment = new StudentAssignment();
-        studentAssignment.setStudent( studentRepository.save(student1));
-        studentAssignment.setAssignment(assignment1);
+        List<String> fbQuestionList = new ArrayList<>();
+        fbQuestionList.add("The grade you expect for this module(A/B/C/D/F)");
+        fbQuestionList.add("Is the module content acceptable or not acceptable? If NOT give reasons.");
+        fbQuestionList.add("Does the lecturer come to the lecture on time?");
+        fbQuestionList.add("Does the lecturer answer students question?");
+        fbQuestionList.add("Are subject materials available whenever you need?");
+        fbQuestionList.add("Can students meet the lecturer anytime?");
 
-        studentAssignment = studentAssignmentRepository.save(studentAssignment);
-
-        Set<StudentAssignment> studentAssignments = new HashSet<StudentAssignment>(Arrays.asList(studentAssignment));
-
-        student1.setStudentAssignment(studentAssignments);
-
-        studentRepository.save(student1);
+        List<FeedBackQuestion> fdqList = new ArrayList<>();
+        FeedBackDTO feedBackDTO = new FeedBackDTO();
+        feedBackDTO.setName("Test Assignment 1");
+        feedBackDTO.setTeacherId(1L);
+        feedBackDTO.setFeedBackQuestions(fbQuestionList);
+        Teacher teacher = teacherRepository.findOne(feedBackDTO.getTeacherId());
+        FeedBack feedBack = new FeedBack();
+        feedBack.setName(feedBackDTO.getName());
+        feedBack.setTeacher(teacher);
+        feedBackDTO.getFeedBackQuestions().forEach(feedBackQuestion -> {
+            FeedBackQuestion fdQ = new FeedBackQuestion();
+            fdQ.setFeedBack(feedBack);
+            fdQ.setQuestion(feedBackQuestion);
+            fdqList.add(fdQ);
+        });
+        feedBackRepository.save(feedBack);
+        feedBackQuestionRepository.save(fdqList);
 
     }
 }

@@ -83,20 +83,34 @@ public class StudentService {
 //    }
 
     public List<StudentAssignmentDTO> getAllAssignmentsForStudent(String studentId){
-        Student student = studentRepo.findOne(Long.parseLong(studentId));
         List<StudentAssignmentDTO> studentAssignmentDTO = new ArrayList<>();
-        student.getStudentAssignment().forEach(studentAssignment -> {
-            System.out.println("START");
-            System.out.println(studentAssignment);
-            System.out.println("END");
-            StudentAssignmentDTO assign = new StudentAssignmentDTO();
-            assign.setAssignId(studentAssignment.getAssignment().getAssignId());
-            assign.setMarks(studentAssignment.getMarks());
-            assign.setName(studentAssignment.getAssignment().getName());
-            assign.setDescription(studentAssignment.getAssignment().getDescription());
-            assign.setCourseId(studentAssignment.getAssignment().getCourse().getcId());
-            studentAssignmentDTO.add(assign);
-        });
+        studentAssignmentRepository.findAll().forEach(
+            studentAssignment -> {
+                 if(studentAssignment.getStudent().getsId()==Long.parseLong(studentId)){
+                     StudentAssignmentDTO assign = new StudentAssignmentDTO();
+                     assign.setAssignId(studentAssignment.getAssignment().getAssignId());
+                     assign.setMarks(studentAssignment.getMarks());
+                     assign.setName(studentAssignment.getAssignment().getName());
+                     assign.setDescription(studentAssignment.getAssignment().getDescription());
+                     assign.setCourseId(studentAssignment.getAssignment().getCourse().getcId());
+                     studentAssignmentDTO.add(assign);
+                 }
+             }
+        );
+//        Student student = studentRepo.findOne(Long.parseLong(studentId));
+//        List<StudentAssignmentDTO> studentAssignmentDTO = new ArrayList<>();
+//        student.getStudentAssignment().forEach(studentAssignment -> {
+//            System.out.println("START");
+//            System.out.println(studentAssignment);
+//            System.out.println("END");
+//            StudentAssignmentDTO assign = new StudentAssignmentDTO();
+//            assign.setAssignId(studentAssignment.getAssignment().getAssignId());
+//            assign.setMarks(studentAssignment.getMarks());
+//            assign.setName(studentAssignment.getAssignment().getName());
+//            assign.setDescription(studentAssignment.getAssignment().getDescription());
+//            assign.setCourseId(studentAssignment.getAssignment().getCourse().getcId());
+//            studentAssignmentDTO.add(assign);
+//        });
         return studentAssignmentDTO;
 
     }
