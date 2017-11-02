@@ -22,7 +22,7 @@ public class Teacher {
     private Department department;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    private Set<Feedback> feedbacks;
+    private Set<FeedBack> feedbacks;
 
     private String name;
 
@@ -38,11 +38,11 @@ public class Teacher {
         return name;
     }
 
-    public Set<Feedback> getFeedbacks() {
+    public Set<FeedBack> getFeedbacks() {
 		return feedbacks;
 	}
 
-	public void setFeedbacks(Set<Feedback> feedbacks) {
+	public void setFeedbacks(Set<FeedBack> feedbacks) {
 		this.feedbacks = feedbacks;
 	}
 
