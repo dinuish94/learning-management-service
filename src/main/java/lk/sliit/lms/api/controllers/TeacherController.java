@@ -26,9 +26,6 @@ import java.util.*;
 public class TeacherController {
 
     @Autowired
-    private TeacherRepository teacherRepository;
-
-    @Autowired
     private TeacherService teacherService;
 
     @Autowired
@@ -36,9 +33,6 @@ public class TeacherController {
 
     @Autowired
     private DeparmentTeacherService deparmentTeacherService;
-
-    @Autowired
-    private DepartmentTeacherDTO departmentTeacherDTO;
 
     @GetMapping("/")
     @ResponseBody()

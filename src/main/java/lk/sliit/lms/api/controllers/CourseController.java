@@ -35,9 +35,6 @@ public class CourseController {
     @Autowired
     private DepartmentCourseService departmentCourseService;
 
-    @Autowired
-    private DepartmentCourseDTO departmentCourseDTO;
-
     @GetMapping("/")
     @ResponseBody()
     public Iterable<Course> getAllQuizzes(){
