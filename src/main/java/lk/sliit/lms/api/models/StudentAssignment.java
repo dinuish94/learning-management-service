@@ -26,10 +26,13 @@ public class StudentAssignment {
     private Assignment assignment;
 
     @Column(name = "grade")
-    private double marks;
+    private long marks;
 
     @Column(name = "file")
     private String file;
+
+    @Column(name = "feedback")
+    private String feedback;
 
     public String getFile() {
         return file;
@@ -63,12 +66,20 @@ public class StudentAssignment {
         this.assignment = assignment;
     }
 
-    public double getMarks() {
+    public long getMarks() {
         return marks;
     }
 
-    public void setMarks(double marks) {
+    public void setMarks(long marks) {
         this.marks = marks;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 
     @Override

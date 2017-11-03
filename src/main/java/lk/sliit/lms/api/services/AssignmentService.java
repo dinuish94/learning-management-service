@@ -2,6 +2,7 @@ package lk.sliit.lms.api.services;
 
 import lk.sliit.lms.api.dto.AssignmentDTO;
 import lk.sliit.lms.api.dto.AssignmentUploadDTO;
+import lk.sliit.lms.api.dto.StudentAssignmentDTO;
 import lk.sliit.lms.api.models.*;
 import lk.sliit.lms.api.repositories.AssignmentRepository;
 import lk.sliit.lms.api.repositories.CourseRepository;
@@ -112,7 +113,7 @@ public class AssignmentService {
     public String store(MultipartFile file) {
         try {
             byte[] bytes = file.getBytes();
-            Path path = Paths.get("src\\main\\java\\lk\\sliit\\lms\\api\\assignments\\", file.getOriginalFilename());
+            Path path = Paths.get("src/main/java/lk/sliit/lms/api/assignments", file.getOriginalFilename());
             //  Path path = Paths.get(rootLocation+file.getOriginalFilename());
             // Path path = Paths.get(context.getRealPath("uploads") + file.getOriginalFilename());
             Files.write(path, bytes);
@@ -134,5 +135,26 @@ public class AssignmentService {
         assignment.setStartDate(assignmentDTO.getStartDate());
         assignment.setEndDate(assignmentDTO.getEndDate());
         return assignmentRepository.save(assignment);
+    }
+
+    public void assignGrade(StudentAssignmentDTO studentAssignmentDTO) {
+
+        studentAssignmentRepository.findAll().forEach(assignment -> {
+            if(assignment.getStudent().getsId().equals(studentAssignmentDTO.getStudentId())
+                    && assignment.getAssignment().getAssignId().equals(studentAssignmentDTO.getAssignId())){
+                assignment.setMarks(studentAssignmentDTO.getMarks());
+                studentAssignmentRepository.save(assignment);
+            }
+        });
+    }
+
+    public void addFeedback(StudentAssignmentDTO studentAssignmentDTO) {
+        studentAssignmentRepository.findAll().forEach(assignment -> {
+            if(assignment.getStudent().getsId().equals(studentAssignmentDTO.getStudentId())
+                    && assignment.getAssignment().getAssignId().equals(studentAssignmentDTO.getAssignId())){
+                assignment.setFeedback(studentAssignmentDTO.getFeedback());
+                studentAssignmentRepository.save(assignment);
+            }
+        });
     }
 }
