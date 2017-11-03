@@ -118,7 +118,7 @@ public class StudentService {
         List<SubmissionDTO> submissionDTOs = new ArrayList<>();
         studentAssignmentRepository.findAll().forEach(
                 studentAssignment -> {
-                    if(studentAssignment.getStudent().getsId()==assignmentId) {
+                    if(studentAssignment.getAssignment().getAssignId()==assignmentId) {
                         SubmissionDTO submissionDTO = new SubmissionDTO();
                         submissionDTO.setFile(studentAssignment.getFile());
                         submissionDTO.setStudentId(studentAssignment.getStudent().getsId());
