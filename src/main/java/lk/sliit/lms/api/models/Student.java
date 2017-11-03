@@ -80,6 +80,8 @@ public class Student{
         this.studentAssignment = studentAssignment;
     }
 
+    public Student(){}
+
     @Override
     public String toString() {
         return "Student{" +

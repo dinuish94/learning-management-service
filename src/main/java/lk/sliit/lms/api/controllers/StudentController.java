@@ -1,7 +1,11 @@
 package lk.sliit.lms.api.controllers;
 
+import lk.sliit.lms.api.dto.QuizM;
+import lk.sliit.lms.api.dto.StudentDTO;
 import lk.sliit.lms.api.models.Enrollment;
+import lk.sliit.lms.api.models.QuizMark;
 import lk.sliit.lms.api.models.Student;
+import lk.sliit.lms.api.services.QuizMarkService;
 import lk.sliit.lms.api.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +23,9 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private QuizMarkService quizMarkService;
 
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
@@ -44,6 +51,18 @@ public class StudentController {
     @ResponseBody
     public ResponseEntity<String> unEnrollStudent(@PathVariable("sId") String studentId,@PathVariable("cId") String courseId ){
         return studentService.unEnroll(studentId,courseId);
+    }
+
+    @RequestMapping(value = "/students/{sId}", method = RequestMethod.PUT)
+    @ResponseBody
+    public Student updateStudent(@PathVariable("sId") Long studentId, @RequestBody StudentDTO student) {
+        return studentService.updateStudent(studentId,student);
+    }
+
+    @RequestMapping(value="/students/{sID}/quizzes", method= RequestMethod.GET)
+    @ResponseBody
+    public List<QuizM> getQuizMarks(@PathVariable("sID") Long studentId) {
+        return studentService.getStudentQuizMarks(studentId);
     }
 
 }

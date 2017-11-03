@@ -63,20 +63,18 @@ public class QuizMarkService {
         quizMark.setStudent(student);
         quizMark.setQuiz(quiz);
         quizMark.setAnsweredQuestions(answeredQuestions);
-
         quizMark = quizMarkRepository.save(quizMark);
 
         return quizMark;
-
-//        return quizMarkRepository.save(quizMark);
     }
 
 
     public QuizMark getMark(Long quizId,Long studentId){
         quizMark = new QuizMark();
-        quizMarkRepository.findAll().forEach(quizM -> {
-            if ((quizM.getQuiz().getqId() == quizId) && (quizM.getStudent().getsId() == studentId)) {
-                quizMark = quizM;
+
+        quizMarkRepository.findByStudent(studentRepository.findOne(studentId)).forEach(quizm -> {
+            if (quizm.getQuiz().getqId() == quizId) {
+               quizMark = quizm;
             }
         });
         return quizMark;
