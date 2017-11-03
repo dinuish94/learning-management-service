@@ -83,21 +83,10 @@ public class AssignmentService {
         Student student = studentRepository.findOne(assignmentDTO.getsId());
         System.out.println("Retrievd Student ID : "+student.getsId());
 
-//        StudentAssignmentPK pk = new StudentAssignmentPK();
-//        pk.setAssignment_id(assignment.getAssignId());
-//        pk.setStudent_id(student.getsId());
-
         StudentAssignment studentAssignment = new StudentAssignment();
         studentAssignment.setStudent(student);
         studentAssignment.setAssignment(assignment);
         studentAssignment.setFile(assignmentDTO.getFile());
-
-
-//        studentAssignment.setId(pk);
-//        studentAssignment = studentAssignmentRepository.save(studentAssignment);
-//        Set<StudentAssignment> studentAssignments = new HashSet<StudentAssignment>(Arrays.asList(studentAssignment));
-//        student.setStudentAssignment(studentAssignments);
-//        studentRepository.save(student);
 
         System.out.println("Student assign : ");
         System.out.println(studentAssignment.getStudent().getsId());
@@ -116,6 +105,28 @@ public class AssignmentService {
             Path path = Paths.get("src/main/java/lk/sliit/lms/api/assignments", file.getOriginalFilename());
             //  Path path = Paths.get(rootLocation+file.getOriginalFilename());
             // Path path = Paths.get(context.getRealPath("uploads") + file.getOriginalFilename());
+            Files.write(path, bytes);
+            return path.toString();
+        } catch (Exception e) {
+            System.out.println(file);
+            throw new RuntimeException("FAIL!", e);
+        }
+    }
+
+    public ResponseEntity<String> uploadAssignmentMaterial(AssignmentUploadDTO assignmentDTO){
+
+        Assignment assignment = assignmentRepository.findOne(assignmentDTO.getAssignId());
+        assignment.setFile(assignmentDTO.getFile());
+        assignmentRepository.save(assignment);
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    public String storeAssignment(MultipartFile file) {
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get("src/main/java/lk/sliit/lms/api/files", file.getOriginalFilename());
             Files.write(path, bytes);
             return path.toString();
         } catch (Exception e) {

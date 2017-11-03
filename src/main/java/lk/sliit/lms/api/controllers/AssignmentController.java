@@ -52,9 +52,6 @@ public class AssignmentController {
 
     @PostMapping("/student")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam String assignId, @RequestParam String sId) {
-        System.out.println("Controller");
-        System.out.println(Long.parseLong(assignId));
-      //  return ResponseEntity.status(HttpStatus.CREATED).build();
         AssignmentUploadDTO assignmentDTO = new AssignmentUploadDTO();
         assignmentDTO.setAssignId(Long.parseLong(assignId));
         assignmentDTO.setsId(Long.parseLong(sId));
@@ -97,6 +94,27 @@ public class AssignmentController {
     @RequestMapping(value = "student-assignments/{id}/file", produces = { "application/json" })
     public @ResponseBody ResponseEntity getFile(@RequestParam(value="fileName", required=false) String fileName) throws IOException {
 
+        ResponseEntity respEntity = uploadFile(fileName);
+        return respEntity;
+    }
+
+    @PostMapping("/materials")
+    public ResponseEntity<String> uploadAssignment(@RequestParam("file") MultipartFile file, @RequestParam String assignId) {
+        AssignmentUploadDTO assignmentDTO = new AssignmentUploadDTO();
+        assignmentDTO.setAssignId(Long.parseLong(assignId));
+        String fileLocation=assignmentService.storeAssignment(file);
+        assignmentDTO.setFile(fileLocation);
+        return assignmentService.uploadAssignmentMaterial(assignmentDTO);
+    }
+
+    @RequestMapping(value = "materials/file", produces = { "application/json" })
+    public @ResponseBody ResponseEntity getAssignmentFile(@RequestParam(value="fileName", required=false) String fileName) throws IOException {
+
+        ResponseEntity respEntity = uploadFile(fileName);
+        return respEntity;
+    }
+
+    private ResponseEntity uploadFile(@RequestParam(value = "fileName", required = false) String fileName) throws IOException {
         ResponseEntity respEntity = null;
 
         byte[] reportBytes = null;
@@ -112,7 +130,7 @@ public class AssignmentController {
             responseHeaders.add("content-disposition", "attachment; filename=" + fileName);
             responseHeaders.add("Content-Type",type);
 
-            respEntity = new ResponseEntity(out, responseHeaders,HttpStatus.OK);
+            respEntity = new ResponseEntity(out, responseHeaders, HttpStatus.OK);
         }else{
             respEntity = new ResponseEntity ("File Not Found", HttpStatus.OK);
         }
