@@ -65,9 +65,9 @@ public class StudentController {
 	  /**
      * add a new student
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody()
-    public Student createStudent(@Valid @RequestBody Student student){
+    public Student createStudent(@Valid @RequestBody StudentDTO student){
 
          return studentService.createStudent(student);
     }

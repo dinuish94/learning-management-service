@@ -121,8 +121,13 @@ public class StudentService {
         return quizMarkList;
     }
 
-    public Student createStudent(Student student){
-        
+    public Student createStudent(StudentDTO newStudent){
+
+        Student student = new Student();
+
+        student.setName(newStudent.getName());
+        student.setEmail(newStudent.getEmail());
+
         return studentRepo.save(student);
     }
         
