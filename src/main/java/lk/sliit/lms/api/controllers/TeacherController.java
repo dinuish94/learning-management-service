@@ -1,16 +1,13 @@
 package lk.sliit.lms.api.controllers;
 
-//import lk.sliit.lms.api.dto.DepartmentTeacherDTO;
+import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.dto.TeacherDTO;
 import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.models.Teacher;
 import lk.sliit.lms.api.repositories.CourseRepository;
-import lk.sliit.lms.api.repositories.TeacherRepository;
 import lk.sliit.lms.api.services.DeparmentTeacherService;
 import lk.sliit.lms.api.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,9 +32,6 @@ public class TeacherController {
 
     @Autowired
     private DeparmentTeacherService deparmentTeacherService;
-
-//    @Autowired
-//    private DepartmentTeacherDTO departmentTeacherDTO;
 
 
     @GetMapping("")
@@ -88,15 +82,11 @@ public class TeacherController {
         teacherService.deleteTeacher(tId);
     }
 
-    /**
-     * map teachers to departments
-     *
-     * @param departmentTeacherDTO
-     * @return
-     */
-//    @RequestMapping(value = "/teachers/map", method = RequestMethod.PUT)
-//    @ResponseBody()
-//    public Teacher mapTeacherToDepartment(@Valid @RequestBody DepartmentTeacherDTO departmentTeacherDTO){
-//        return deparmentTeacherService.mapTeacherToDepartment(departmentTeacherDTO.getdId(),departmentTeacherDTO.gettId());
-//    }
+
+    @RequestMapping(value = "/{id}/courses", method = RequestMethod.GET)
+    @ResponseBody
+    public List<CourseDTO> getCoursesForTeacher(@PathVariable Long id){
+        return teacherService.getCoursesForTeacher(id);
+    }
+
 }

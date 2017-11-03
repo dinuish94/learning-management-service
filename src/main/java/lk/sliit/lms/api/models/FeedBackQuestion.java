@@ -1,8 +1,5 @@
 package lk.sliit.lms.api.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
 
 /**
@@ -17,7 +14,7 @@ public class FeedBackQuestion {
 
     @ManyToOne
     @JoinColumn(name = "feedback_id")
-    private FeedBack feedBack;
+    private Feedback feedBack;
 
     public String getQuestion() {
         return question;
@@ -37,11 +34,11 @@ public class FeedBackQuestion {
         this.qId = qId;
     }
 
-    public FeedBack getFeedBack() {
+    public Feedback getFeedBack() {
         return feedBack;
     }
 
-    public void setFeedBack(FeedBack feedBack) {
+    public void setFeedBack(Feedback feedBack) {
         this.feedBack = feedBack;
     }
 

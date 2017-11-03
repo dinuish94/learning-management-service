@@ -29,7 +29,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/assignments")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class AssignmentController {
 
     @Autowired

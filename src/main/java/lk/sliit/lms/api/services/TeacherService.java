@@ -1,5 +1,6 @@
 package lk.sliit.lms.api.services;
 
+import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.dto.TeacherDTO;
 import lk.sliit.lms.api.models.Department;
 import lk.sliit.lms.api.models.Student;
@@ -72,5 +73,20 @@ public class TeacherService {
     public void deleteTeacher(Long tId){
         Teacher teacher = teacherRepository.findOne(tId);
         teacherRepository.delete(teacher);
+    }
+
+    public List<CourseDTO> getCoursesForTeacher(Long id) {
+        Teacher teacher = teacherRepository.findOne(id);
+        List<CourseDTO> courseDTOS = new ArrayList<>();
+        teacher.getCourses().forEach(course -> {
+            CourseDTO courseDTO = new CourseDTO();
+            courseDTO.setName(course.getName());
+            courseDTO.setDescription(course.getDescription());
+            courseDTO.setTitle(course.getTitle());
+            courseDTO.setcId(course.getcId());
+            courseDTOS.add(courseDTO);
+        });
+
+        return courseDTOS;
     }
 }
