@@ -3,9 +3,8 @@ package lk.sliit.lms.api.controllers;
 import lk.sliit.lms.api.dto.FeedBackAnswerDTO;
 import lk.sliit.lms.api.dto.FeedBackDTO;
 import lk.sliit.lms.api.dto.FeedBackQuestionDTO;
-import lk.sliit.lms.api.models.Course;
-import lk.sliit.lms.api.models.FeedBack;
-import lk.sliit.lms.api.services.FeedBackService;
+import lk.sliit.lms.api.models.Feedback;
+import lk.sliit.lms.api.services.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +18,14 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/feedbacks")
 @CrossOrigin(origins = "http://localhost:4200")
-public class FeedBackController {
+public class FeedbackController {
 
     @Autowired
-    FeedBackService feedBackService;
+    FeedbackService feedBackService;
 
     @GetMapping("/")
     @ResponseBody()
-    public Iterable<FeedBack> getAllFeedbacks(){
+    public Iterable<Feedback> getAllFeedbacks(){
         return feedBackService.getFeedBackSessions();
     }
 

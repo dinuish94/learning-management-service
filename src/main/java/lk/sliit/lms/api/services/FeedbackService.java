@@ -3,13 +3,13 @@ package lk.sliit.lms.api.services;
 import lk.sliit.lms.api.dto.FeedBackAnswerDTO;
 import lk.sliit.lms.api.dto.FeedBackDTO;
 import lk.sliit.lms.api.dto.FeedBackQuestionDTO;
-import lk.sliit.lms.api.models.FeedBack;
+import lk.sliit.lms.api.models.Feedback;
 import lk.sliit.lms.api.models.FeedBackAnswer;
 import lk.sliit.lms.api.models.FeedBackQuestion;
 import lk.sliit.lms.api.models.Teacher;
 import lk.sliit.lms.api.repositories.FeedBackAnswerRepository;
 import lk.sliit.lms.api.repositories.FeedBackQuestionRepository;
-import lk.sliit.lms.api.repositories.FeedBackRepository;
+import lk.sliit.lms.api.repositories.FeedbackRepository;
 import lk.sliit.lms.api.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,10 +23,10 @@ import java.util.List;
  * Created by Jonathan on 11/1/2017.
  */
 @Service
-public class FeedBackService {
+public class FeedbackService {
 
     @Autowired
-    FeedBackRepository feedBackRepository;
+    FeedbackRepository feedBackRepository;
 
     @Autowired
     FeedBackQuestionRepository feedBackQuestionRepository;
@@ -37,9 +37,9 @@ public class FeedBackService {
     @Autowired
     TeacherRepository teacherRepository;
 
-    public List<FeedBack> getFeedBackSessions(){
+    public List<Feedback> getFeedBackSessions(){
 
-        List<FeedBack> feedBacks = new ArrayList<>();
+        List<Feedback> feedBacks = new ArrayList<>();
         feedBackRepository.findAll().forEach(feedBack -> {
             feedBacks.add(feedBack);
         });
@@ -49,7 +49,7 @@ public class FeedBackService {
     public ResponseEntity<String> createFeedBack(FeedBackDTO feedBackDTO){
         List<FeedBackQuestion> fdqList = new ArrayList<>();
         Teacher teacher = teacherRepository.findOne(feedBackDTO.getTeacherId());
-        FeedBack feedBack = new FeedBack();
+        Feedback feedBack = new Feedback();
         feedBack.setName(feedBackDTO.getName());
         feedBack.setTeacher(teacher);
 
@@ -86,7 +86,7 @@ public class FeedBackService {
     public List<FeedBackQuestionDTO> getFeedbackQuestions(Long fId){
 
         List<FeedBackQuestionDTO> questionList = new ArrayList<>();
-        FeedBack fb=feedBackRepository.findOne(fId);
+        Feedback fb=feedBackRepository.findOne(fId);
         feedBackQuestionRepository.findAll().forEach(fbqs->{
             if(fbqs.getFeedBack().getfId()==fId){
                 FeedBackQuestionDTO feedBackQuestionDTO = new FeedBackQuestionDTO();

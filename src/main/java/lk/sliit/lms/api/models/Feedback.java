@@ -9,7 +9,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "feedback")
-public class FeedBack {
+public class Feedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
