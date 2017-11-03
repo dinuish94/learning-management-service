@@ -22,6 +22,8 @@ public class Student{
 
     private String name;
 
+    private String email;
+
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses;
 
@@ -31,6 +33,14 @@ public class Student{
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public Department getDepartment() {
 		return department;

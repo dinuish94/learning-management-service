@@ -1,9 +1,13 @@
 package lk.sliit.lms.api.controllers;
 
+
+//import lk.sliit.lms.api.dto.DepartmentCourseDTO;
+
 import lk.sliit.lms.api.dto.DepartmentCourseDTO;
 import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.models.Assignment;
 import lk.sliit.lms.api.models.Course;
+import lk.sliit.lms.api.models.Quiz;
 import lk.sliit.lms.api.repositories.CourseRepository;
 import lk.sliit.lms.api.services.AssignmentService;
 import lk.sliit.lms.api.services.DepartmentCourseService;
@@ -34,6 +38,11 @@ public class CourseController {
 
     @Autowired
     private DepartmentCourseService departmentCourseService;
+
+
+//    @Autowired
+//    private DepartmentCourseDTO departmentCourseDTO;
+
 
     @GetMapping("/")
     @ResponseBody()
@@ -85,6 +94,14 @@ public class CourseController {
      * @param departmentCourseDTO
      * @return
      */
+
+//    @RequestMapping(value = "/course/map", method = RequestMethod.PUT)
+//    @ResponseBody()
+//    public Course mapCoursesToDepartment(@Valid @RequestBody DepartmentCourseDTO  departmentCourseDTO){
+//
+//        return departmentCourseService.mapCoursesToDepartment(departmentCourseDTO.getdId(), departmentCourseDTO.getcId());
+//    }
+
     @RequestMapping(value = "/course/map", method = RequestMethod.PUT)
     @ResponseBody()
     public Course mapCoursesToDepartment(@Valid @RequestBody DepartmentCourseDTO  departmentCourseDTO){
@@ -92,4 +109,9 @@ public class CourseController {
         return departmentCourseService.mapCoursesToDepartment(departmentCourseDTO.getdId(), departmentCourseDTO.getcId());
     }
 
+    @RequestMapping(value = "/{courseId}/quizzes", method = RequestMethod.GET)
+    @ResponseBody()
+    public List<Quiz> mapCoursesToDepartment(@PathVariable("courseId") Long courseId){
+        return courseService.getQuizForCourse(courseId);
+    }
 }

@@ -1,6 +1,7 @@
 package lk.sliit.lms.api.controllers;
 
-import lk.sliit.lms.api.dto.DepartmentTeacherDTO;
+//import lk.sliit.lms.api.dto.DepartmentTeacherDTO;
+import lk.sliit.lms.api.dto.TeacherDTO;
 import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.models.Teacher;
 import lk.sliit.lms.api.repositories.CourseRepository;
@@ -23,6 +24,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping(path = "/teachers")
+@CrossOrigin(origins = "http://localhost:4200")
 public class TeacherController {
 
     @Autowired
@@ -34,9 +36,13 @@ public class TeacherController {
     @Autowired
     private DeparmentTeacherService deparmentTeacherService;
 
-    @GetMapping("/")
+//    @Autowired
+//    private DepartmentTeacherDTO departmentTeacherDTO;
+
+
+    @GetMapping("")
     @ResponseBody()
-    public Set<Teacher> getAllTeachers(){
+    public Iterable<Teacher> getAllTeachers(){
         return teacherService.getAllTeachers();
     }
 
@@ -60,16 +66,16 @@ public class TeacherController {
      */
     @RequestMapping(value = "/teacher/{teacherID}", method = RequestMethod.GET)
     @ResponseBody()
-    public Teacher getTeacher (@PathVariable("teacherID") String teacherID){
+    public Teacher getTeacher (@PathVariable("teacherID") Long teacherID){
         return teacherService.getTeacher(teacherID);
     }
 
     /**
      * add a new teacher
      */
-    @RequestMapping(value = "/teachers/add", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody()
-    public Teacher createTeacher (@Valid @RequestBody Teacher teacher){
+    public Teacher createTeacher (@Valid @RequestBody TeacherDTO teacher){
         return teacherService.createTeacher(teacher);
     }
 
@@ -88,9 +94,9 @@ public class TeacherController {
      * @param departmentTeacherDTO
      * @return
      */
-    @RequestMapping(value = "/teachers/map", method = RequestMethod.PUT)
-    @ResponseBody()
-    public Teacher mapTeacherToDepartment(@Valid @RequestBody DepartmentTeacherDTO departmentTeacherDTO){
-        return deparmentTeacherService.mapTeacherToDepartment(departmentTeacherDTO.getdId(),departmentTeacherDTO.gettId());
-    }
+//    @RequestMapping(value = "/teachers/map", method = RequestMethod.PUT)
+//    @ResponseBody()
+//    public Teacher mapTeacherToDepartment(@Valid @RequestBody DepartmentTeacherDTO departmentTeacherDTO){
+//        return deparmentTeacherService.mapTeacherToDepartment(departmentTeacherDTO.getdId(),departmentTeacherDTO.gettId());
+//    }
 }
