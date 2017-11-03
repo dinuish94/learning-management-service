@@ -1,6 +1,10 @@
 package lk.sliit.lms.api.controllers;
 
+
 //import lk.sliit.lms.api.dto.DepartmentCourseDTO;
+
+import lk.sliit.lms.api.dto.DepartmentCourseDTO;
+import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.models.Assignment;
 import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.repositories.CourseRepository;
@@ -44,20 +48,19 @@ public class CourseController {
     }
 
 
-    @RequestMapping(value = "/courses", method = RequestMethod.GET)
+    @GetMapping("")
     @ResponseBody
-    public List<Course> getAllCourses(){
-        return courseService.getAllCourses();
+    public List<CourseDTO> getAllCourses(){
+        return courseService.getAllCoursesDTO();
     }
 
-
-    @RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
+    @GetMapping("/{courseId}")
     @ResponseBody
     public Course getCourse(@PathVariable("courseId") Long courseId){
         return courseService.getCourse(courseId);
     }
 
-    @RequestMapping(value = "/{courseId}/assignments", method = RequestMethod.GET)
+    @GetMapping("/{courseId}/assignments")
     @ResponseBody
     public List<Assignment> getCourseAssignments(@PathVariable("courseId") Long courseId){
         return assignmentService.getAllAssignmentsForCourse(courseId);
@@ -88,10 +91,18 @@ public class CourseController {
      * @param departmentCourseDTO
      * @return
      */
+
 //    @RequestMapping(value = "/course/map", method = RequestMethod.PUT)
 //    @ResponseBody()
 //    public Course mapCoursesToDepartment(@Valid @RequestBody DepartmentCourseDTO  departmentCourseDTO){
 //
 //        return departmentCourseService.mapCoursesToDepartment(departmentCourseDTO.getdId(), departmentCourseDTO.getcId());
 //    }
+
+    @RequestMapping(value = "/course/map", method = RequestMethod.PUT)
+    @ResponseBody()
+    public Course mapCoursesToDepartment(@Valid @RequestBody DepartmentCourseDTO  departmentCourseDTO){
+
+        return departmentCourseService.mapCoursesToDepartment(departmentCourseDTO.getdId(), departmentCourseDTO.getcId());
+    }
 }
