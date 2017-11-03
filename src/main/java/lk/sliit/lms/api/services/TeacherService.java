@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Handles all the teacher related operations
@@ -36,20 +33,9 @@ public class TeacherService {
      *
      * @return all teachers
      */
-    public Set<Teacher> getAllTeachers() {
+    public Iterable<Teacher> getAllTeachers() {
 
-        Set<Teacher> teachers = new HashSet<>();
-
-        teacherRepository.findAll().forEach(teacher -> {
-            Teacher retrievedTeacher = new Teacher();
-            retrievedTeacher.setName(teacher.getName());
-            retrievedTeacher.setId(teacher.getId());
-            teachers.add(teacher);
-        });
-
-        teacherRepository.save(new Teacher());
-
-        return teachers;
+        return teacherRepository.findAll();
     }
 
     /***
@@ -57,11 +43,9 @@ public class TeacherService {
      *
      * @return teacher
      */
-    public Teacher getTeacher (String teacherID) {
+    public Teacher getTeacher (Long teacherID) {
 
-        Long id = Long.parseLong(teacherID);
-        Teacher teacher = teacherRepository.findOne(id);
-        return teacher;
+        return teacherRepository.findOne(teacherID);
     }
 
     /**
