@@ -1,6 +1,6 @@
 package lk.sliit.lms.api.controllers;
 
-import lk.sliit.lms.api.dto.DepartmentCourseDTO;
+//import lk.sliit.lms.api.dto.DepartmentCourseDTO;
 import lk.sliit.lms.api.models.Assignment;
 import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.repositories.CourseRepository;
@@ -34,8 +34,8 @@ public class CourseController {
     @Autowired
     private DepartmentCourseService departmentCourseService;
 
-    @Autowired
-    private DepartmentCourseDTO departmentCourseDTO;
+//    @Autowired
+//    private DepartmentCourseDTO departmentCourseDTO;
 
     @GetMapping("/")
     @ResponseBody()
@@ -88,10 +88,10 @@ public class CourseController {
      * @param departmentCourseDTO
      * @return
      */
-    @RequestMapping(value = "/course/map", method = RequestMethod.PUT)
-    @ResponseBody()
-    public Course mapCoursesToDepartment(@Valid @RequestBody DepartmentCourseDTO  departmentCourseDTO){
-
-        return departmentCourseService.mapCoursesToDepartment(departmentCourseDTO.getdId(), departmentCourseDTO.getcId());
-    }
+//    @RequestMapping(value = "/course/map", method = RequestMethod.PUT)
+//    @ResponseBody()
+//    public Course mapCoursesToDepartment(@Valid @RequestBody DepartmentCourseDTO  departmentCourseDTO){
+//
+//        return departmentCourseService.mapCoursesToDepartment(departmentCourseDTO.getdId(), departmentCourseDTO.getcId());
+//    }
 }

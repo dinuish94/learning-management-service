@@ -21,8 +21,8 @@ public class Teacher {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    private Set<Feedback> feedbacks;
+    //@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    //private Set<Feedback> feedbacks;
 
     private String name;
 
@@ -38,13 +38,22 @@ public class Teacher {
         return name;
     }
 
-    public Set<Feedback> getFeedbacks() {
-		return feedbacks;
-	}
+//    public Set<Feedback> getFeedbacks() {
+//		return feedbacks;
+//	}
 
-	public void setFeedbacks(Set<Feedback> feedbacks) {
-		this.feedbacks = feedbacks;
-	}
+//	public void setFeedbacks(Set<Feedback> feedbacks) {
+//		this.feedbacks = feedbacks;
+//	}
+
+    public Teacher(Department department, String name) {
+        this.department = department;
+        this.name = name;
+    }
+
+    public Teacher() {
+
+    }
 
     public void setName(String name) {
         this.name = name;

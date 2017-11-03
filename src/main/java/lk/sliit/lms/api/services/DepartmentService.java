@@ -1,5 +1,6 @@
 package lk.sliit.lms.api.services;
 
+import lk.sliit.lms.api.dto.DepartmentDTO;
 import org.springframework.stereotype.Service;
 import lk.sliit.lms.api.models.Department;
 
@@ -101,8 +102,11 @@ public class DepartmentService {
         return department;
     }
 
-    public Department createDepartment (Department department){
+    public Department createDepartment (DepartmentDTO departmentDTO){
 
+        Set li = new HashSet();
+
+        Department department = new Department(departmentDTO.getName(),departmentDTO.getDescription(),li,li,li);
         return departmentRepository.save(department);
     }
 

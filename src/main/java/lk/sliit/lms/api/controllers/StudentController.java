@@ -1,6 +1,6 @@
 package lk.sliit.lms.api.controllers;
 
-import lk.sliit.lms.api.dto.DepartmentStudentDTO;
+//import lk.sliit.lms.api.dto.DepartmentStudentDTO;
 import lk.sliit.lms.api.models.Enrollment;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.services.DepartmentStudentService;
@@ -24,8 +24,8 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 	
-	 @Autowired
-    private DepartmentStudentDTO departmentStudentDTO;
+//	 @Autowired
+//    private DepartmentStudentDTO departmentStudentDTO;
 
     @Autowired
     private DepartmentStudentService departmentStudentService;
@@ -79,9 +79,9 @@ public class StudentController {
      * @param departmentStudentDTO
      * @return
      */
-    @RequestMapping(value = "/students/map", method = RequestMethod.PUT)
-    @ResponseBody()
-    public Student mapStudentToDepartment(@Valid @RequestBody DepartmentStudentDTO departmentStudentDTO){
-        return departmentStudentService.mapStudentToCourse(departmentStudentDTO.getdId(),departmentStudentDTO.getsId());
-    }
+//    @RequestMapping(value = "/students/map", method = RequestMethod.PUT)
+//    @ResponseBody()
+//    public Student mapStudentToDepartment(@Valid @RequestBody DepartmentStudentDTO departmentStudentDTO){
+//        return departmentStudentService.mapStudentToCourse(departmentStudentDTO.getdId(),departmentStudentDTO.getsId());
+//    }
 }

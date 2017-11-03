@@ -1,6 +1,7 @@
 package lk.sliit.lms.api.controllers;
 
-import lk.sliit.lms.api.dto.DepartmentTeacherDTO;
+//import lk.sliit.lms.api.dto.DepartmentTeacherDTO;
+import lk.sliit.lms.api.dto.TeacherDTO;
 import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.models.Teacher;
 import lk.sliit.lms.api.repositories.CourseRepository;
@@ -37,8 +38,8 @@ public class TeacherController {
     @Autowired
     private DeparmentTeacherService deparmentTeacherService;
 
-    @Autowired
-    private DepartmentTeacherDTO departmentTeacherDTO;
+//    @Autowired
+//    private DepartmentTeacherDTO departmentTeacherDTO;
 
     @GetMapping("/")
     @ResponseBody()
@@ -73,9 +74,9 @@ public class TeacherController {
     /**
      * add a new teacher
      */
-    @RequestMapping(value = "/teachers/add", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody()
-    public Teacher createTeacher (@Valid @RequestBody Teacher teacher){
+    public Teacher createTeacher (@Valid @RequestBody TeacherDTO teacher){
         return teacherService.createTeacher(teacher);
     }
 
@@ -94,9 +95,9 @@ public class TeacherController {
      * @param departmentTeacherDTO
      * @return
      */
-    @RequestMapping(value = "/teachers/map", method = RequestMethod.PUT)
-    @ResponseBody()
-    public Teacher mapTeacherToDepartment(@Valid @RequestBody DepartmentTeacherDTO departmentTeacherDTO){
-        return deparmentTeacherService.mapTeacherToDepartment(departmentTeacherDTO.getdId(),departmentTeacherDTO.gettId());
-    }
+//    @RequestMapping(value = "/teachers/map", method = RequestMethod.PUT)
+//    @ResponseBody()
+//    public Teacher mapTeacherToDepartment(@Valid @RequestBody DepartmentTeacherDTO departmentTeacherDTO){
+//        return deparmentTeacherService.mapTeacherToDepartment(departmentTeacherDTO.getdId(),departmentTeacherDTO.gettId());
+//    }
 }
