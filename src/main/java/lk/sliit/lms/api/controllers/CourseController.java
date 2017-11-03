@@ -7,6 +7,7 @@ import lk.sliit.lms.api.dto.DepartmentCourseDTO;
 import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.models.Assignment;
 import lk.sliit.lms.api.models.Course;
+import lk.sliit.lms.api.models.Quiz;
 import lk.sliit.lms.api.repositories.CourseRepository;
 import lk.sliit.lms.api.services.AssignmentService;
 import lk.sliit.lms.api.services.DepartmentCourseService;
@@ -106,5 +107,11 @@ public class CourseController {
     public Course mapCoursesToDepartment(@Valid @RequestBody DepartmentCourseDTO  departmentCourseDTO){
 
         return departmentCourseService.mapCoursesToDepartment(departmentCourseDTO.getdId(), departmentCourseDTO.getcId());
+    }
+
+    @RequestMapping(value = "/{courseId}/quizzes", method = RequestMethod.GET)
+    @ResponseBody()
+    public List<Quiz> mapCoursesToDepartment(@PathVariable("courseId") Long courseId){
+        return courseService.getQuizForCourse(courseId);
     }
 }

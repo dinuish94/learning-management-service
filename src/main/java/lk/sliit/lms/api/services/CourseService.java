@@ -2,7 +2,9 @@ package lk.sliit.lms.api.services;
 
 import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.models.Course;
+import lk.sliit.lms.api.models.Quiz;
 import lk.sliit.lms.api.repositories.CourseRepository;
+import lk.sliit.lms.api.repositories.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ public class CourseService {
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    QuizRepository quizRepository;
 
     private List<Course> courses = new ArrayList<>();
     private List<CourseDTO> coursesDTO = new ArrayList<>();
@@ -70,5 +75,11 @@ public class CourseService {
      */
     public void deleteCourse(@Valid @RequestBody Long cId){
         courseService.deleteCourse(cId);
+    }
+
+    public List<Quiz> getQuizForCourse(Long courseId) {
+        Course course = courseRepo.findOne(courseId);
+
+        return quizRepository.findByCourse(course);
     }
 }
