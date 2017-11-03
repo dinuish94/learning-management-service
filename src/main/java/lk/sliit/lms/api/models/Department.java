@@ -36,6 +36,16 @@ public class Department {
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private Set<Student> students;
 
+    public Department(String name, String description, Set<Course> courses, Set<Teacher> teachers, Set<Student> students) {
+        this.name = name;
+        this.description = description;
+        this.courses = courses;
+        this.teachers = teachers;
+        this.students = students;
+    }
+
+    public Department(){}
+
     public String getDescription() {
         return description;
     }

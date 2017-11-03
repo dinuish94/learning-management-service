@@ -10,9 +10,11 @@ import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.models.Enrollment;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.models.StudentAssignment;
+import lk.sliit.lms.api.models.*;
 import lk.sliit.lms.api.repositories.CourseRepository;
 import lk.sliit.lms.api.repositories.StudentAssignmentRepository;
 import lk.sliit.lms.api.repositories.StudentRepository;
+import lk.sliit.lms.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +38,9 @@ public class StudentService {
 
     @Autowired
     StudentAssignmentRepository studentAssignmentRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     public List<Student> getAllStudents(){
         List<Student> students = new ArrayList<>();
@@ -76,7 +81,12 @@ public class StudentService {
     }
 
     public Student createStudent(Student student){
-        
+
+        User s = new User();
+        s.setEmail(student.getEmail());
+        s.setPassword("123");
+        s.setRole(3);
+        userRepository.save(s);
         return studentRepo.save(student);
     }
         

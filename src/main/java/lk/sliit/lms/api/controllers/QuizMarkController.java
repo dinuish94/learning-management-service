@@ -11,8 +11,8 @@ import java.util.List;
  * Created by kashifroshen on 10/21/17.
  */
 @RestController
-@RequestMapping(path = "/quizzes")
-@CrossOrigin(origins = "*")
+@RequestMapping(path = "/quizzes/{quizId}/students/{studentId}/quizmarks")
+@CrossOrigin(origins = "http://localhost:4200")
 public class QuizMarkController {
     @Autowired
     private QuizMarkService quizMarksService;
