@@ -5,8 +5,6 @@ import lk.sliit.lms.api.models.QuizMark;
 import lk.sliit.lms.api.services.QuizMarkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -28,7 +26,7 @@ public class QuizMarkController {
 
     @PostMapping("/{quizId}/students/{studentId}/quizmarks")
     @ResponseBody
-    public QuizMark createQuiz(@RequestBody QuizMarkDTO quizMarkDTO){
+    public QuizMark createQuizMark(@RequestBody QuizMarkDTO quizMarkDTO){
        return quizMarksService.addMarks(quizMarkDTO);
     }
 

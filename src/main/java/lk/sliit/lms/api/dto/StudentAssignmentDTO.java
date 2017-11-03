@@ -7,8 +7,10 @@ public class StudentAssignmentDTO {
     private long assignId;
     private String name;
     private String description;
-    private double marks;
+    private long marks;
+    private String feedback;
     private long cId;
+    private long studentId;
 
     public long getCourseId() {
         return cId;
@@ -42,11 +44,35 @@ public class StudentAssignmentDTO {
         this.description = description;
     }
 
-    public double getMarks() {
+    public long getMarks() {
         return marks;
     }
 
-    public void setMarks(double marks) {
+    public void setMarks(long marks) {
         this.marks = marks;
+    }
+
+    public long getcId() {
+        return cId;
+    }
+
+    public void setcId(long cId) {
+        this.cId = cId;
+    }
+
+    public long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(long studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 }
