@@ -19,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(path = "/quizzes/{quizId}/students/{studentId}/quizmarks")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class QuizMarkController {
     @Autowired
     private QuizMarkService quizMarksService;
