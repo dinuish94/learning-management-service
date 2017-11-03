@@ -84,4 +84,9 @@ public class QuizMarkService {
     public Student getQuizMark(QuizMarkDTO quizMarkDTO) {
         return studentRepository.findOne(quizMarkDTO.getStudent());
     }
+
+    public List<QuizMark> getMarks(Long quizId) {
+        Quiz quiz = quizRepository.findOne(quizId);
+        return quizMarkRepository.findByQuiz(quiz);
+    }
 }
