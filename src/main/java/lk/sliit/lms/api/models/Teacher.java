@@ -23,8 +23,19 @@ public class Teacher {
 
     //@OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     //private Set<Feedback> feedbacks;
+//    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+//    private Set<FeedBack> feedbacks;
 
     private String name;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public Long getId() {
         return tId;
@@ -54,6 +65,13 @@ public class Teacher {
     public Teacher() {
 
     }
+//    public Set<FeedBack> getFeedbacks() {
+//		return feedbacks;
+//	}
+//
+//	public void setFeedbacks(Set<FeedBack> feedbacks) {
+//		this.feedbacks = feedbacks;
+//	}
 
     public void setName(String name) {
         this.name = name;

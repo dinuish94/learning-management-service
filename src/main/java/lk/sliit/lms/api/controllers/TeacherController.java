@@ -24,10 +24,8 @@ import java.util.*;
  */
 @RestController
 @RequestMapping(path = "/teachers")
+@CrossOrigin(origins = "http://localhost:4200")
 public class TeacherController {
-
-    @Autowired
-    private TeacherRepository teacherRepository;
 
     @Autowired
     private TeacherService teacherService;
@@ -41,9 +39,10 @@ public class TeacherController {
 //    @Autowired
 //    private DepartmentTeacherDTO departmentTeacherDTO;
 
-    @GetMapping("/")
+
+    @GetMapping("")
     @ResponseBody()
-    public Set<Teacher> getAllTeachers(){
+    public Iterable<Teacher> getAllTeachers(){
         return teacherService.getAllTeachers();
     }
 
@@ -67,7 +66,7 @@ public class TeacherController {
      */
     @RequestMapping(value = "/teacher/{teacherID}", method = RequestMethod.GET)
     @ResponseBody()
-    public Teacher getTeacher (@PathVariable("teacherID") String teacherID){
+    public Teacher getTeacher (@PathVariable("teacherID") Long teacherID){
         return teacherService.getTeacher(teacherID);
     }
 

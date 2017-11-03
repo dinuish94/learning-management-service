@@ -5,7 +5,9 @@ import lk.sliit.lms.api.models.Department;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.models.Teacher;
 import lk.sliit.lms.api.repositories.DepartmentRepository;
+import lk.sliit.lms.api.models.User;
 import lk.sliit.lms.api.repositories.TeacherRepository;
+import lk.sliit.lms.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,10 @@ public class TeacherService {
 
     @Autowired
     DepartmentRepository departmentRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
 
     /**
      * Retrieves all teachers and maps them to Teacher objects
@@ -53,9 +59,10 @@ public class TeacherService {
      */
     public Teacher createTeacher(TeacherDTO teacherDTO){
 
-        Department department = departmentRepository.findOne(teacherDTO.getDepartmentId());
+        Teacher teacher = new Teacher();
 
-        Teacher teacher = new Teacher(department,teacherDTO.getName());
+        teacher.setName(teacherDTO.getName());
+        teacher.setEmail(teacherDTO.getEmail());
 
         return teacherRepository.save(teacher);
     }

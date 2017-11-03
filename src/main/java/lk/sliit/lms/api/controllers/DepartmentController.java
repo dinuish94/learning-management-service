@@ -33,21 +33,12 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping (path = "/departments")
+@CrossOrigin(origins = "http://localhost:4200")
 public class DepartmentController {
 
     @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
     private DepartmentService departmentService;
 
-    @Autowired
-    private TeacherService teacherService;
-
-    @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
-    private StudentRepository studentRepository;
 
     //to get all the department details
     @RequestMapping(value = "", method = RequestMethod.GET)

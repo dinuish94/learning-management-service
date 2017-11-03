@@ -4,16 +4,8 @@ package lk.sliit.lms.api.dto;
  * Created by kashifroshen on 11/1/17.
  */
 public class TeacherDTO {
-    long departmentId;
     String name;
-
-    public long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(long departmentId) {
-        this.departmentId = departmentId;
-    }
+    String email;
 
     public String getName() {
         return name;
@@ -23,9 +15,12 @@ public class TeacherDTO {
         this.name = name;
     }
 
-    public TeacherDTO(long departmentId, String name) {
-        this.departmentId = departmentId;
-        this.name = name;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public TeacherDTO() {

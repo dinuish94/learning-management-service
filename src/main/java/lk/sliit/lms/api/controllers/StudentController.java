@@ -6,9 +6,6 @@ import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.services.DepartmentStudentService;
 import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.dto.StudentAssignmentDTO;
-import lk.sliit.lms.api.models.Enrollment;
-import lk.sliit.lms.api.models.Student;
-import lk.sliit.lms.api.models.StudentAssignment;
 import lk.sliit.lms.api.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +25,7 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
-	
+
 //	 @Autowired
 //    private DepartmentStudentDTO departmentStudentDTO;
 
@@ -79,7 +76,7 @@ public class StudentController {
     /**
      * map students to departments
      *
-     * @param departmentStudentDTO
+     * @param
      * @return
      */
 
