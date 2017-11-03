@@ -65,20 +65,20 @@ public class StudentController {
 	  /**
      * add a new student
      */
-    @RequestMapping(value = "/students/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody()
     public Student createStudent(@Valid @RequestBody Student student){
 
          return studentService.createStudent(student);
     }
 
-    @RequestMapping(value = "/students/{sId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{sId}", method = RequestMethod.PUT)
     @ResponseBody
     public Student updateStudent(@PathVariable("sId") Long studentId, @RequestBody StudentDTO student) {
         return studentService.updateStudent(studentId,student);
     }
 
-    @RequestMapping(value="/students/{sID}/quizzes", method= RequestMethod.GET)
+    @RequestMapping(value="/{sID}/quizzes", method= RequestMethod.GET)
     @ResponseBody
     public List<QuizM> getQuizMarks(@PathVariable("sID") Long studentId) {
         return studentService.getStudentQuizMarks(studentId);
@@ -86,7 +86,7 @@ public class StudentController {
 
 
     //delete a department
-    @RequestMapping(value = "/students/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody()
     public void deleteStudent(@Valid @RequestBody Long sId){
         studentService.deleteStudent(sId);
@@ -98,7 +98,7 @@ public class StudentController {
      * @param departmentStudentDTO
      * @return
      */
-    @RequestMapping(value = "/students/map", method = RequestMethod.PUT)
+    @RequestMapping(value = "/map", method = RequestMethod.PUT)
     @ResponseBody()
     public Student mapStudentToDepartment(@Valid @RequestBody DepartmentStudentDTO departmentStudentDTO){
         return departmentStudentService.mapStudentToCourse(departmentStudentDTO.getdId(),departmentStudentDTO.getsId());
