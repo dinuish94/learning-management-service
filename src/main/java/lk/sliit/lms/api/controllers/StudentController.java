@@ -2,7 +2,6 @@ package lk.sliit.lms.api.controllers;
 
 import lk.sliit.lms.api.dto.QuizM;
 import lk.sliit.lms.api.dto.StudentDTO;
-
 import lk.sliit.lms.api.dto.DepartmentStudentDTO;
 import lk.sliit.lms.api.models.Enrollment;
 import lk.sliit.lms.api.models.QuizMark;
@@ -30,6 +29,9 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+//	 @Autowired
+//    private DepartmentStudentDTO departmentStudentDTO;
 
     @Autowired
     private QuizMarkService quizMarkService;
@@ -95,7 +97,7 @@ public class StudentController {
     /**
      * map students to departments
      *
-     * @param departmentStudentDTO
+     * @param
      * @return
      */
     @RequestMapping(value = "/map", method = RequestMethod.PUT)
@@ -117,3 +119,4 @@ public class StudentController {
     }
 
 }
+

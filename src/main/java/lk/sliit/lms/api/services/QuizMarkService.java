@@ -43,7 +43,6 @@ public class QuizMarkService {
         Student student = studentRepository.findOne(quizMarkDTO.getStudent());
         Quiz quiz = quizRepository.findOne(quizMarkDTO.getQuiz());
 
-       List<Question> questions = new ArrayList<>();
        List<AnsweredQuestion> answeredQuestions = new ArrayList<>();
        AnsweredQuestion answeredQuestion;
 
@@ -89,4 +88,6 @@ public class QuizMarkService {
         Quiz quiz = quizRepository.findOne(quizId);
         return quizMarkRepository.findByQuiz(quiz);
     }
+
+
 }

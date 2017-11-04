@@ -1,17 +1,20 @@
 package lk.sliit.lms.api.services;
 
+import lk.sliit.lms.api.dto.CourseDTO;
+import lk.sliit.lms.api.dto.TeacherDTO;
+import lk.sliit.lms.api.models.Department;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.models.Teacher;
+import lk.sliit.lms.api.repositories.DepartmentRepository;
+import lk.sliit.lms.api.models.User;
 import lk.sliit.lms.api.repositories.TeacherRepository;
+import lk.sliit.lms.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Handles all the teacher related operations
@@ -25,25 +28,21 @@ public class TeacherService {
     @Autowired
     TeacherRepository teacherRepository;
 
+    @Autowired
+    DepartmentRepository departmentRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+
     /**
      * Retrieves all teachers and maps them to Teacher objects
      *
      * @return all teachers
      */
-    public Set<Teacher> getAllTeachers() {
+    public Iterable<Teacher> getAllTeachers() {
 
-        Set<Teacher> teachers = new HashSet<>();
-
-        teacherRepository.findAll().forEach(teacher -> {
-            Teacher retrievedTeacher = new Teacher();
-            retrievedTeacher.setName(teacher.getName());
-            retrievedTeacher.setId(teacher.getId());
-            teachers.add(teacher);
-        });
-
-        teacherRepository.save(new Teacher());
-
-        return teachers;
+        return teacherRepository.findAll();
     }
 
     /***
@@ -51,17 +50,20 @@ public class TeacherService {
      *
      * @return teacher
      */
-    public Teacher getTeacher (String teacherID) {
+    public Teacher getTeacher (Long teacherID) {
 
-        Long id = Long.parseLong(teacherID);
-        Teacher teacher = teacherRepository.findOne(id);
-        return teacher;
+        return teacherRepository.findOne(teacherID);
     }
 
     /**
      * create a new teacher
      */
-    public Teacher createTeacher(Teacher teacher){
+    public Teacher createTeacher(TeacherDTO teacherDTO){
+
+        Teacher teacher = new Teacher();
+
+        teacher.setName(teacherDTO.getName());
+        teacher.setEmail(teacherDTO.getEmail());
 
         return teacherRepository.save(teacher);
     }
@@ -71,5 +73,20 @@ public class TeacherService {
     public void deleteTeacher(Long tId){
         Teacher teacher = teacherRepository.findOne(tId);
         teacherRepository.delete(teacher);
+    }
+
+    public List<CourseDTO> getCoursesForTeacher(Long id) {
+        Teacher teacher = teacherRepository.findOne(id);
+        List<CourseDTO> courseDTOS = new ArrayList<>();
+        teacher.getCourses().forEach(course -> {
+            CourseDTO courseDTO = new CourseDTO();
+            courseDTO.setName(course.getName());
+            courseDTO.setDescription(course.getDescription());
+            courseDTO.setTitle(course.getTitle());
+            courseDTO.setcId(course.getcId());
+            courseDTOS.add(courseDTO);
+        });
+
+        return courseDTOS;
     }
 }

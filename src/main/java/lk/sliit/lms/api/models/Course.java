@@ -1,6 +1,7 @@
 package lk.sliit.lms.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -36,6 +37,11 @@ public class Course{
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private Set<Assignment> assignments;
 
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "teacher_course", joinColumns = @JoinColumn(name = "course_id",referencedColumnName = "cId"), inverseJoinColumns = @JoinColumn(name = "teacher_id", referencedColumnName = "tId"))
+    private Set<Teacher> teachers;
+
     public String getDescription() {
         return description;
     }
@@ -54,6 +60,7 @@ public class Course{
 
     public Course() {
         this.students = new HashSet<>();
+        this.teachers = new HashSet<>();
     }
 
     public Long getcId() {
@@ -94,6 +101,14 @@ public class Course{
 
     public void setAssignments(Set<Assignment> assignments) {
         this.assignments = assignments;
+    }
+
+    public Set<Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(Set<Teacher> teachers) {
+        this.teachers = teachers;
     }
 
     @Override

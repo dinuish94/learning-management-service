@@ -9,15 +9,18 @@ import lk.sliit.lms.api.dto.StudentDTO;
 
 import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.dto.StudentAssignmentDTO;
+import lk.sliit.lms.api.dto.SubmissionDTO;
 import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.models.Enrollment;
 import lk.sliit.lms.api.models.QuizMark;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.models.StudentAssignment;
+import lk.sliit.lms.api.models.*;
 import lk.sliit.lms.api.repositories.CourseRepository;
 import lk.sliit.lms.api.repositories.QuizMarkRepository;
 import lk.sliit.lms.api.repositories.StudentAssignmentRepository;
 import lk.sliit.lms.api.repositories.StudentRepository;
+import lk.sliit.lms.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +48,9 @@ public class StudentService {
 
     @Autowired
     StudentAssignmentRepository studentAssignmentRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     public List<Student> getAllStudents(){
         List<Student> students = new ArrayList<>();
@@ -128,6 +134,11 @@ public class StudentService {
         student.setName(newStudent.getName());
         student.setEmail(newStudent.getEmail());
 
+        User s = new User();
+        s.setEmail(student.getEmail());
+        s.setPassword("123");
+        s.setRole(3);
+        userRepository.save(s);
         return studentRepo.save(student);
     }
         
@@ -136,13 +147,6 @@ public class StudentService {
         Student student = studentRepo.findOne(sId);
         studentRepo.delete(student);
     }
-//    public List<StudentAssignment> getAllAssignmentsForStudent(String studentId){
-//        Student student = studentRepo.findOne(Long.parseLong(studentId));
-//        List<StudentAssignment> studentAssignments = new ArrayList<>();
-//        student.getStudentAssignment().forEach(studentAssignment -> studentAssignments.add(studentAssignment));
-//        return studentAssignments;
-//
-//    }
 
     public List<StudentAssignmentDTO> getAllAssignmentsForStudent(String studentId){
         List<StudentAssignmentDTO> studentAssignmentDTO = new ArrayList<>();
@@ -159,22 +163,25 @@ public class StudentService {
                  }
              }
         );
-//        Student student = studentRepo.findOne(Long.parseLong(studentId));
-//        List<StudentAssignmentDTO> studentAssignmentDTO = new ArrayList<>();
-//        student.getStudentAssignment().forEach(studentAssignment -> {
-//            System.out.println("START");
-//            System.out.println(studentAssignment);
-//            System.out.println("END");
-//            StudentAssignmentDTO assign = new StudentAssignmentDTO();
-//            assign.setAssignId(studentAssignment.getAssignment().getAssignId());
-//            assign.setMarks(studentAssignment.getMarks());
-//            assign.setName(studentAssignment.getAssignment().getName());
-//            assign.setDescription(studentAssignment.getAssignment().getDescription());
-//            assign.setCourseId(studentAssignment.getAssignment().getCourse().getcId());
-//            studentAssignmentDTO.add(assign);
-//        });
         return studentAssignmentDTO;
+    }
 
+    public List<SubmissionDTO> getAllStudentAssignments(Long assignmentId){
+        List<SubmissionDTO> submissionDTOs = new ArrayList<>();
+        studentAssignmentRepository.findAll().forEach(
+                studentAssignment -> {
+                    if(studentAssignment.getAssignment().getAssignId()==assignmentId) {
+                        SubmissionDTO submissionDTO = new SubmissionDTO();
+                        submissionDTO.setFile(studentAssignment.getFile());
+                        submissionDTO.setStudentId(studentAssignment.getStudent().getsId());
+                        submissionDTO.setStudentName(studentAssignment.getStudent().getName());
+                        submissionDTO.setMarks(studentAssignment.getMarks());
+                        submissionDTO.setFeedback(studentAssignment.getFeedback());
+                        submissionDTOs.add(submissionDTO);
+                    }
+                }
+        );
+        return submissionDTOs;
     }
 
     public List<CourseDTO> getAllCoursesForStudent(String studentId){

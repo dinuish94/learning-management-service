@@ -1,6 +1,5 @@
 package lk.sliit.lms.api.repositories;
 
-import lk.sliit.lms.api.models.FeedBack;
 import lk.sliit.lms.api.models.FeedBackQuestion;
 import org.springframework.data.repository.CrudRepository;
 

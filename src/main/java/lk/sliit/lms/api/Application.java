@@ -53,13 +53,16 @@ public class Application implements CommandLineRunner {
     StudentAssignmentRepository studentAssignmentRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     TeacherRepository teacherRepository;
 
     @Autowired
     FeedBackQuestionRepository feedBackQuestionRepository;
 
     @Autowired
-    FeedBackRepository feedBackRepository;
+    FeedbackRepository feedBackRepository;
 
     @Override
     public void run(String... strings) throws Exception {
@@ -70,12 +73,28 @@ public class Application implements CommandLineRunner {
 
         Student student = new Student();
         student.setName("Jonathan");
+        student.setEmail("jonathan@gmail.com");
         course.getStudents().add(studentRepository.save(student));
         courseRepository.save(course);
 
+
         Student student2 = new Student();
         student2.setName("Deon");
+        student2.setEmail("deon@gmail.com");
         studentRepository.save(student2);
+
+        User users1= new User();
+        users1.setEmail(student.getEmail());
+        users1.setRole(3);
+        users1.setPassword("123");
+        userRepository.save(users1);
+
+
+        User users2= new User();
+        users1.setEmail(student2.getEmail());
+        users1.setRole(3);
+        users1.setPassword("123");
+        userRepository.save(users2);
 
 
 
@@ -281,26 +300,26 @@ public class Application implements CommandLineRunner {
         assignment2.setEndDate(endDate);
         assignmentService.addAssignment(assignment2);
 
-//        Assignment assignment1 = assignmentService.addAssignment(assignment);
-//
-//        Student student1 = new Student();
-//        student1.setName("Dinu");
-//
-//        StudentAssignment studentAssignment = new StudentAssignment();
-//        studentAssignment.setStudent( studentRepository.save(student1));
-//        studentAssignment.setAssignment(assignment1);
-//
-//        studentAssignment = studentAssignmentRepository.save(studentAssignment);
-//
-//        Set<StudentAssignment> studentAssignments = new HashSet<StudentAssignment>(Arrays.asList(studentAssignment));
-//
-//        student1.setStudentAssignment(studentAssignments);
-//
-//        studentRepository.save(student1);
-
         Teacher t = new Teacher();
         t.setName("Mr. Nimal");
+        t.setEmail("nimal@gmail.com");
+        Set<Course> courses = new HashSet<>();
+        courses.add(course2);
+        courses.add(course3);
+        t.setCourses(courses);
         teacherRepository.save(t);
+        course2.getTeachers().add(t);
+        course3.getTeachers().add(t);
+        courseRepository.save(course2);
+        courseRepository.save(course3);
+
+        User usert1 = new User();
+        usert1.setEmail(t.getEmail());
+        usert1.setRole(2);
+        usert1.setPassword("123");
+
+        userRepository.save(usert1);
+
 
         List<String> fbQuestionList = new ArrayList<>();
         fbQuestionList.add("The grade you expect for this module(A/B/C/D/F)");
@@ -316,7 +335,7 @@ public class Application implements CommandLineRunner {
         feedBackDTO.setTeacherId(1L);
         feedBackDTO.setFeedBackQuestions(fbQuestionList);
         Teacher teacher = teacherRepository.findOne(feedBackDTO.getTeacherId());
-        FeedBack feedBack = new FeedBack();
+        Feedback feedBack = new Feedback();
         feedBack.setName(feedBackDTO.getName());
         feedBack.setTeacher(teacher);
         feedBackDTO.getFeedBackQuestions().forEach(feedBackQuestion -> {

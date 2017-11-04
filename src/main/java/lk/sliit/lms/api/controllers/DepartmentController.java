@@ -3,6 +3,7 @@ package lk.sliit.lms.api.controllers;
 import java.util.Set;
 import java.util.*;
 
+import lk.sliit.lms.api.dto.DepartmentDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,23 +41,23 @@ public class DepartmentController {
 
 
     //to get all the department details
-    @RequestMapping(value = "/departments", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody()
     public List<Department> getAllDepartments(){
         return departmentService.getAllDepartments();
     }
 
     //Retrieve a Single Department
-    @RequestMapping(value ="/departments/{departmentID}", method = RequestMethod.GET)
+    @RequestMapping(value ="/{departmentID}", method = RequestMethod.GET)
     @ResponseBody()
     public Department getDepartment(@PathVariable("departmentID") String departmentID){
         return departmentService.getDepartment(departmentID);
     }
 
     //add a new department
-    @RequestMapping(value = "/departments/add", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody()
-    public Department createDepartment(@Valid @RequestBody Department department){
+    public Department createDepartment(@Valid @RequestBody DepartmentDTO department){
 
         return departmentService.createDepartment(department);
     }
@@ -74,7 +75,7 @@ public class DepartmentController {
 //    }
 
     //delete a department
-    @RequestMapping(value = "/departments/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody()
     public void deleteDepartment(@Valid @RequestBody Long dId){
         departmentService.deleteDepartment(dId);

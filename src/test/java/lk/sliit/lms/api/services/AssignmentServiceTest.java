@@ -1,10 +1,13 @@
-package test;
+package lk.sliit.lms.api.services;
 
 
+import lk.sliit.lms.api.dto.AssignmentDTO;
 import lk.sliit.lms.api.models.Assignment;
 import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.repositories.AssignmentRepository;
 import lk.sliit.lms.api.repositories.CourseRepository;
+import lk.sliit.lms.api.repositories.StudentAssignmentRepository;
+import lk.sliit.lms.api.repositories.StudentRepository;
 import lk.sliit.lms.api.services.AssignmentService;
 import org.junit.After;
 import org.junit.Before;
@@ -18,7 +21,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.servlet.ServletContext;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -47,6 +52,21 @@ public class AssignmentServiceTest {
         public CourseRepository courseRepository() {
             return Mockito.mock(CourseRepository.class);
         }
+
+        @Bean
+        public StudentRepository studentRepository() {
+            return Mockito.mock(StudentRepository.class);
+        }
+
+        @Bean
+        public StudentAssignmentRepository studentAssignmentRepository() {
+            return Mockito.mock(StudentAssignmentRepository.class);
+        }
+
+        @Bean
+        public ServletContext servletContext() {
+            return Mockito.mock(ServletContext.class);
+        }
     }
 
     @Autowired
@@ -55,6 +75,12 @@ public class AssignmentServiceTest {
     private AssignmentRepository assignmentRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private StudentAssignmentRepository studentAssignmentRepository;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private ServletContext servletContext;
 
     @Before
     public void setUp() throws Exception {
@@ -73,14 +99,14 @@ public class AssignmentServiceTest {
 
         Mockito.when(assignmentRepository.findAll()).thenReturn(assignments);
         Mockito.when(courseRepository.findOne(Mockito.anyLong())).thenReturn(course);
+        Mockito.when(assignmentRepository.save(Mockito.any(Assignment.class))).thenReturn(assignment1);
     }
 
     @After
     public void verify() {
-        Mockito.verify(assignmentRepository, VerificationModeFactory.times(1)).findAll();
+//        Mockito.verify(assignmentRepository, VerificationModeFactory.times(1)).findAll();
         Mockito.reset(assignmentRepository);
-//        Mockito.verify(courseRepository, VerificationModeFactory.times(1)).findOne(Mockito.anyLong());
-//        Mockito.reset(assignmentRepository);
+        Mockito.reset(courseRepository);
     }
 
     @Test
@@ -94,7 +120,14 @@ public class AssignmentServiceTest {
 
     @Test
     public void addAssignment() throws Exception {
-
+        AssignmentDTO assignmentDTO = new AssignmentDTO();
+        assignmentDTO.setName("Assign1");
+        assignmentDTO.setDescription("Desc");
+        assignmentDTO.setStartDate(new Date());
+        assignmentDTO.setEndDate(new Date());
+        assignmentDTO.setCourseId(1L);
+        Assignment assignment = assignmentService.addAssignment(assignmentDTO);
+        assertEquals("assignment1",assignment.getName());
     }
 
     @Test

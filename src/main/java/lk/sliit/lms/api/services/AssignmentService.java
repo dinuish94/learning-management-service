@@ -2,6 +2,7 @@ package lk.sliit.lms.api.services;
 
 import lk.sliit.lms.api.dto.AssignmentDTO;
 import lk.sliit.lms.api.dto.AssignmentUploadDTO;
+import lk.sliit.lms.api.dto.StudentAssignmentDTO;
 import lk.sliit.lms.api.models.*;
 import lk.sliit.lms.api.repositories.AssignmentRepository;
 import lk.sliit.lms.api.repositories.CourseRepository;
@@ -82,21 +83,10 @@ public class AssignmentService {
         Student student = studentRepository.findOne(assignmentDTO.getsId());
         System.out.println("Retrievd Student ID : "+student.getsId());
 
-//        StudentAssignmentPK pk = new StudentAssignmentPK();
-//        pk.setAssignment_id(assignment.getAssignId());
-//        pk.setStudent_id(student.getsId());
-
         StudentAssignment studentAssignment = new StudentAssignment();
         studentAssignment.setStudent(student);
         studentAssignment.setAssignment(assignment);
         studentAssignment.setFile(assignmentDTO.getFile());
-
-
-//        studentAssignment.setId(pk);
-//        studentAssignment = studentAssignmentRepository.save(studentAssignment);
-//        Set<StudentAssignment> studentAssignments = new HashSet<StudentAssignment>(Arrays.asList(studentAssignment));
-//        student.setStudentAssignment(studentAssignments);
-//        studentRepository.save(student);
 
         System.out.println("Student assign : ");
         System.out.println(studentAssignment.getStudent().getsId());
@@ -112,9 +102,31 @@ public class AssignmentService {
     public String store(MultipartFile file) {
         try {
             byte[] bytes = file.getBytes();
-            Path path = Paths.get("src\\main\\java\\lk\\sliit\\lms\\api\\assignments\\", file.getOriginalFilename());
+            Path path = Paths.get("src/main/java/lk/sliit/lms/api/assignments", file.getOriginalFilename());
             //  Path path = Paths.get(rootLocation+file.getOriginalFilename());
             // Path path = Paths.get(context.getRealPath("uploads") + file.getOriginalFilename());
+            Files.write(path, bytes);
+            return path.toString();
+        } catch (Exception e) {
+            System.out.println(file);
+            throw new RuntimeException("FAIL!", e);
+        }
+    }
+
+    public ResponseEntity<String> uploadAssignmentMaterial(AssignmentUploadDTO assignmentDTO){
+
+        Assignment assignment = assignmentRepository.findOne(assignmentDTO.getAssignId());
+        assignment.setFile(assignmentDTO.getFile());
+        assignmentRepository.save(assignment);
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    public String storeAssignment(MultipartFile file) {
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get("src/main/java/lk/sliit/lms/api/files", file.getOriginalFilename());
             Files.write(path, bytes);
             return path.toString();
         } catch (Exception e) {
@@ -134,5 +146,26 @@ public class AssignmentService {
         assignment.setStartDate(assignmentDTO.getStartDate());
         assignment.setEndDate(assignmentDTO.getEndDate());
         return assignmentRepository.save(assignment);
+    }
+
+    public void assignGrade(StudentAssignmentDTO studentAssignmentDTO) {
+
+        studentAssignmentRepository.findAll().forEach(assignment -> {
+            if(assignment.getStudent().getsId().equals(studentAssignmentDTO.getStudentId())
+                    && assignment.getAssignment().getAssignId().equals(studentAssignmentDTO.getAssignId())){
+                assignment.setMarks(studentAssignmentDTO.getMarks());
+                studentAssignmentRepository.save(assignment);
+            }
+        });
+    }
+
+    public void addFeedback(StudentAssignmentDTO studentAssignmentDTO) {
+        studentAssignmentRepository.findAll().forEach(assignment -> {
+            if(assignment.getStudent().getsId().equals(studentAssignmentDTO.getStudentId())
+                    && assignment.getAssignment().getAssignId().equals(studentAssignmentDTO.getAssignId())){
+                assignment.setFeedback(studentAssignmentDTO.getFeedback());
+                studentAssignmentRepository.save(assignment);
+            }
+        });
     }
 }
