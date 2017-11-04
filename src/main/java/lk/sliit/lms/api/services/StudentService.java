@@ -5,6 +5,7 @@ import jdk.nashorn.internal.ir.Assignment;
 import jdk.nashorn.internal.parser.JSONParser;
 import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.dto.StudentAssignmentDTO;
+import lk.sliit.lms.api.dto.StudentDTO;
 import lk.sliit.lms.api.models.*;
 import lk.sliit.lms.api.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,5 +151,14 @@ public class StudentService {
         Student student = studentRepo.findOne(studentId);
 
         return quizMarkRepository.findByStudent(student);
+    }
+
+    public Student updateStudent(long studentId,StudentDTO updatedStudent) {
+        Student student = studentRepo.findOne(studentId);
+
+        student.setName(updatedStudent.getName());
+        student.setEmail(updatedStudent.getEmail());
+
+        return studentRepo.save(student);
     }
 }

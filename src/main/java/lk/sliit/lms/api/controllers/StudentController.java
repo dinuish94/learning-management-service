@@ -1,6 +1,7 @@
 package lk.sliit.lms.api.controllers;
 
 //import lk.sliit.lms.api.dto.DepartmentStudentDTO;
+import lk.sliit.lms.api.dto.StudentDTO;
 import lk.sliit.lms.api.models.Enrollment;
 import lk.sliit.lms.api.models.QuizMark;
 import lk.sliit.lms.api.models.Student;
@@ -72,6 +73,13 @@ public class StudentController {
     @ResponseBody()
     public void deleteStudent(@Valid @RequestBody Long sId){
         studentService.deleteStudent(sId);
+    }
+
+    @RequestMapping(value="/{studentId}", method = RequestMethod.PUT)
+    @ResponseBody()
+    public Student updateStudent(@PathVariable("studentId") Long studentId,@RequestBody StudentDTO student) {
+        return studentService.updateStudent(studentId,student);
+
     }
 
     /**
