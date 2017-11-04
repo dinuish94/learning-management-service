@@ -53,6 +53,9 @@ public class Application implements CommandLineRunner {
     StudentAssignmentRepository studentAssignmentRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     TeacherRepository teacherRepository;
 
     @Autowired
@@ -70,12 +73,28 @@ public class Application implements CommandLineRunner {
 
         Student student = new Student();
         student.setName("Jonathan");
+        student.setEmail("jonathan@gmail.com");
         course.getStudents().add(studentRepository.save(student));
         courseRepository.save(course);
 
+
         Student student2 = new Student();
         student2.setName("Deon");
+        student2.setEmail("deon@gmail.com");
         studentRepository.save(student2);
+
+        User users1= new User();
+        users1.setEmail(student.getEmail());
+        users1.setRole(3);
+        users1.setPassword("123");
+        userRepository.save(users1);
+
+
+        User users2= new User();
+        users1.setEmail(student2.getEmail());
+        users1.setRole(3);
+        users1.setPassword("123");
+        userRepository.save(users2);
 
 
 
@@ -300,7 +319,16 @@ public class Application implements CommandLineRunner {
 
         Teacher t = new Teacher();
         t.setName("Mr. Nimal");
+        t.setEmail("nimal@gmail.com");
         teacherRepository.save(t);
+
+        User usert1 = new User();
+        usert1.setEmail(t.getEmail());
+        usert1.setRole(2);
+        usert1.setPassword("123");
+
+        userRepository.save(usert1);
+
 
         List<String> fbQuestionList = new ArrayList<>();
         fbQuestionList.add("The grade you expect for this module(A/B/C/D/F)");
