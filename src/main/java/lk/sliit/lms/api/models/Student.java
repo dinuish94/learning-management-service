@@ -21,6 +21,15 @@ public class Student{
     private Long sId;
 
     private String name;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     private String email;
 
@@ -86,10 +95,20 @@ public class Student{
         this.studentAssignment.add(studentAssignment);
     }
 
+    public Student(String name, String email, Set<Course> courses, Set<StudentAssignment> studentAssignment) {
+        this.name = name;
+        this.email = email;
+        this.courses = courses;
+        this.studentAssignment = studentAssignment;
+    }
+
+    public Student(){}
+
     @Override
     public String toString() {
         return "Student{" +
                 "sId=" + sId +
+
                 ", name='" + name + '\'' +
                 '}';
     }

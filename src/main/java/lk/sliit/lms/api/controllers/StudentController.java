@@ -1,8 +1,12 @@
 package lk.sliit.lms.api.controllers;
 
-//import lk.sliit.lms.api.dto.DepartmentStudentDTO;
+import lk.sliit.lms.api.dto.QuizM;
+import lk.sliit.lms.api.dto.StudentDTO;
+import lk.sliit.lms.api.dto.DepartmentStudentDTO;
 import lk.sliit.lms.api.models.Enrollment;
+import lk.sliit.lms.api.models.QuizMark;
 import lk.sliit.lms.api.models.Student;
+import lk.sliit.lms.api.services.QuizMarkService;
 import lk.sliit.lms.api.services.DepartmentStudentService;
 import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.dto.StudentAssignmentDTO;
@@ -30,7 +34,11 @@ public class StudentController {
 //    private DepartmentStudentDTO departmentStudentDTO;
 
     @Autowired
+    private QuizMarkService quizMarkService;
+
+    @Autowired
     private DepartmentStudentService departmentStudentService;
+
 
     @GetMapping("")
     @ResponseBody
@@ -59,15 +67,28 @@ public class StudentController {
 	  /**
      * add a new student
      */
-    @RequestMapping(value = "/students/add", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody()
-    public Student createStudent(@Valid @RequestBody Student student){
+    public Student createStudent(@Valid @RequestBody StudentDTO student){
 
          return studentService.createStudent(student);
     }
 
+    @RequestMapping(value = "/{sId}", method = RequestMethod.PUT)
+    @ResponseBody
+    public Student updateStudent(@PathVariable("sId") Long studentId, @RequestBody StudentDTO student) {
+        return studentService.updateStudent(studentId,student);
+    }
+
+    @RequestMapping(value="/{sID}/quizzes", method= RequestMethod.GET)
+    @ResponseBody
+    public List<QuizM> getQuizMarks(@PathVariable("sID") Long studentId) {
+        return studentService.getStudentQuizMarks(studentId);
+    }
+
+
     //delete a department
-    @RequestMapping(value = "/students/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody()
     public void deleteStudent(@Valid @RequestBody Long sId){
         studentService.deleteStudent(sId);
@@ -79,18 +100,11 @@ public class StudentController {
      * @param
      * @return
      */
-
-//    @RequestMapping(value = "/students/map", method = RequestMethod.PUT)
-//    @ResponseBody()
-//    public Student mapStudentToDepartment(@Valid @RequestBody DepartmentStudentDTO departmentStudentDTO){
-//        return departmentStudentService.mapStudentToCourse(departmentStudentDTO.getdId(),departmentStudentDTO.getsId());
-//    }
-
-//    @RequestMapping(value = "/students/map", method = RequestMethod.PUT)
-//    @ResponseBody()
-//    public Student mapStudentToDepartment(@Valid @RequestBody DepartmentStudentDTO departmentStudentDTO){
-//        return departmentStudentService.mapStudentToCourse(departmentStudentDTO.getdId(),departmentStudentDTO.getsId());
-//    }
+    @RequestMapping(value = "/map", method = RequestMethod.PUT)
+    @ResponseBody()
+    public Student mapStudentToDepartment(@Valid @RequestBody DepartmentStudentDTO departmentStudentDTO){
+        return departmentStudentService.mapStudentToCourse(departmentStudentDTO.getdId(),departmentStudentDTO.getsId());
+    }
 
     @GetMapping("/{studentId}/assignments")
     @ResponseBody
@@ -103,5 +117,6 @@ public class StudentController {
     public List<CourseDTO> getAllCoursesForStudent(@PathVariable("studentId") String studentId){
         return studentService.getAllCoursesForStudent(studentId);
     }
+
 }
 

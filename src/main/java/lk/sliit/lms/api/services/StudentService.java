@@ -3,15 +3,21 @@ package lk.sliit.lms.api.services;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import jdk.nashorn.internal.ir.Assignment;
 import jdk.nashorn.internal.parser.JSONParser;
+
+import lk.sliit.lms.api.dto.QuizM;
+import lk.sliit.lms.api.dto.StudentDTO;
+
 import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.dto.StudentAssignmentDTO;
 import lk.sliit.lms.api.dto.SubmissionDTO;
 import lk.sliit.lms.api.models.Course;
 import lk.sliit.lms.api.models.Enrollment;
+import lk.sliit.lms.api.models.QuizMark;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.models.StudentAssignment;
 import lk.sliit.lms.api.models.*;
 import lk.sliit.lms.api.repositories.CourseRepository;
+import lk.sliit.lms.api.repositories.QuizMarkRepository;
 import lk.sliit.lms.api.repositories.StudentAssignmentRepository;
 import lk.sliit.lms.api.repositories.StudentRepository;
 import lk.sliit.lms.api.repositories.UserRepository;
@@ -22,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -35,6 +42,9 @@ public class StudentService {
 
     @Autowired
     CourseRepository courseRepo;
+
+    @Autowired
+    QuizMarkRepository quizMarkRepository;
 
     @Autowired
     StudentAssignmentRepository studentAssignmentRepository;
@@ -80,7 +90,49 @@ public class StudentService {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    public Student createStudent(Student student){
+    public Student updateStudent(Long studentId, StudentDTO student) {
+        Student updateStudent = studentRepo.findOne(studentId);
+
+        if (student.getName() != null) {
+            updateStudent.setName(student.getName());
+        } else if (student.getEmail() != null) {
+            updateStudent.setEmail(student.getEmail());
+        }
+
+        studentRepo.save(updateStudent);
+
+        return updateStudent;
+    }
+
+    public List<QuizM> getStudentQuizMarks(Long studentId) {
+//        Student student = studentRepo.findOne(studentId);
+        List<QuizM> quizMarkList = new ArrayList();
+
+        quizMarkRepository.findAll().forEach(quizMark -> {
+            if (quizMark.getStudent().getsId() == studentId) {
+                QuizM quizM = new QuizM();
+                quizM.setQuiz(quizMark.getQuiz());
+                Student student = studentRepo.findOne(quizMark.getStudent().getsId());
+                StudentDTO s = new StudentDTO();
+                s.setEmail(student.getEmail());
+                s.setName(student.getName());
+                s.setStudentId(student.getsId());
+                quizM.setStudent(s);
+                quizM.setAnsweredQuestions(quizMark.getAnsweredQuestions());
+
+                quizMarkList.add(quizM);
+            }
+
+        });
+        return quizMarkList;
+    }
+
+    public Student createStudent(StudentDTO newStudent){
+
+        Student student = new Student();
+
+        student.setName(newStudent.getName());
+        student.setEmail(newStudent.getEmail());
 
         User s = new User();
         s.setEmail(student.getEmail());
