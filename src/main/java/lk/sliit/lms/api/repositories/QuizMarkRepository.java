@@ -2,6 +2,7 @@ package lk.sliit.lms.api.repositories;
 
 import lk.sliit.lms.api.models.Quiz;
 import lk.sliit.lms.api.models.QuizMark;
+import lk.sliit.lms.api.models.Student;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -11,4 +12,5 @@ import java.util.List;
  */
 public interface QuizMarkRepository extends CrudRepository<QuizMark, Long> {
     List<QuizMark> findByQuiz(Quiz quiz);
+    List<QuizMark> findByStudent(Student student);
 }

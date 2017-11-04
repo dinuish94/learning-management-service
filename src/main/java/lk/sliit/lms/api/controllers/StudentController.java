@@ -2,6 +2,7 @@ package lk.sliit.lms.api.controllers;
 
 //import lk.sliit.lms.api.dto.DepartmentStudentDTO;
 import lk.sliit.lms.api.models.Enrollment;
+import lk.sliit.lms.api.models.QuizMark;
 import lk.sliit.lms.api.models.Student;
 import lk.sliit.lms.api.services.DepartmentStudentService;
 import lk.sliit.lms.api.dto.CourseDTO;
@@ -102,6 +103,12 @@ public class StudentController {
     @ResponseBody
     public List<CourseDTO> getAllCoursesForStudent(@PathVariable("studentId") String studentId){
         return studentService.getAllCoursesForStudent(studentId);
+    }
+
+    @GetMapping("/{studentId}/quizzes")
+    @ResponseBody
+    public List<QuizMark> getQuizMarks(@PathVariable("studentId") Long studentId) {
+        return studentService.getstudentQuizMarks(studentId);
     }
 }
 

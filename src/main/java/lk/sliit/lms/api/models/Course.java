@@ -100,7 +100,12 @@ public class Course{
     public String toString() {
         return "Course{" +
                 "cId=" + cId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", title='" + title + '\'' +
                 ", students=" + students +
+                ", department=" + department +
+                ", assignments=" + assignments +
                 '}';
     }
 }

@@ -6,10 +6,7 @@ import jdk.nashorn.internal.parser.JSONParser;
 import lk.sliit.lms.api.dto.CourseDTO;
 import lk.sliit.lms.api.dto.StudentAssignmentDTO;
 import lk.sliit.lms.api.models.*;
-import lk.sliit.lms.api.repositories.CourseRepository;
-import lk.sliit.lms.api.repositories.StudentAssignmentRepository;
-import lk.sliit.lms.api.repositories.StudentRepository;
-import lk.sliit.lms.api.repositories.UserRepository;
+import lk.sliit.lms.api.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +30,9 @@ public class StudentService {
 
     @Autowired
     StudentAssignmentRepository studentAssignmentRepository;
+
+    @Autowired
+    QuizMarkRepository quizMarkRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -144,6 +144,11 @@ public class StudentService {
             courseDTO.add(c);
         });
         return courseDTO;
+    }
 
+    public List<QuizMark> getstudentQuizMarks(Long studentId) {
+        Student student = studentRepo.findOne(studentId);
+
+        return quizMarkRepository.findByStudent(student);
     }
 }

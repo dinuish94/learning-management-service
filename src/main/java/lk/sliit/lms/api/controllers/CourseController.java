@@ -114,4 +114,13 @@ public class CourseController {
     public List<Quiz> mapCoursesToDepartment(@PathVariable("courseId") Long courseId){
         return courseService.getQuizForCourse(courseId);
     }
+
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    @ResponseBody()
+    public Course addCourse (@Valid @RequestBody CourseDTO course){
+
+        return courseService.addCourse(course);
+    }
+
+
 }

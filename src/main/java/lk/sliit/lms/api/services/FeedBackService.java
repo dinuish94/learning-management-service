@@ -40,6 +40,8 @@ public class FeedBackService {
     public List<FeedBack> getFeedBackSessions(){
 
         List<FeedBack> feedBacks = new ArrayList<>();
+
+
         feedBackRepository.findAll().forEach(feedBack -> {
             feedBacks.add(feedBack);
         });

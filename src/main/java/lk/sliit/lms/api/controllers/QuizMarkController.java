@@ -19,14 +19,14 @@ public class QuizMarkController {
     @Autowired
     private QuizMarkService quizMarksService;
 
-    @GetMapping("/{quizId}/students/{studentId}/quizmarks")
+    @GetMapping("")
     @ResponseBody()
     public QuizMark getAllQuizzes(@PathVariable("quizId") Long quizId,@PathVariable("studentId") Long studentId){
         return quizMarksService.getMark(quizId, studentId);
 
     }
 
-    @PostMapping("/{quizId}/students/{studentId}/quizmarks")
+    @PostMapping("")
     @ResponseBody
     public QuizMark createQuiz(@RequestBody QuizMarkDTO quizMarkDTO){
        return quizMarksService.addMarks(quizMarkDTO);

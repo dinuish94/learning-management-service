@@ -70,6 +70,16 @@ public class CourseService {
         return courseRepo.save(course);
     }
 
+    public Course addCourse(CourseDTO courseDTO) {
+        Course course = new Course();
+
+        course.setTitle(courseDTO.getTitle());
+        course.setName(courseDTO.getName());
+        course.setDescription(courseDTO.getName());
+
+        return courseRepo.save(course);
+    }
+
     /**
      * delete a course
      */

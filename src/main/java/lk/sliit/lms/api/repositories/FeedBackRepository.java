@@ -4,7 +4,7 @@ import lk.sliit.lms.api.models.FeedBack;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * Created by Jonathan on 11/1/2017.
+ * Created by kashifroshen on 11/3/17.
  */
-public interface FeedBackRepository extends CrudRepository<FeedBack, Long> {
+public interface FeedBackRepository extends CrudRepository<FeedBack,Long> {
 }
