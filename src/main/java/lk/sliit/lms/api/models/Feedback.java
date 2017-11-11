@@ -1,8 +1,6 @@
 package lk.sliit.lms.api.models;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Jonathan on 11/1/2017.

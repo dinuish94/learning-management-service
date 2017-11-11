@@ -69,7 +69,7 @@ public class Application implements CommandLineRunner {
 
         Course course = new Course();
         course.setTitle("IT150");
-        course.setDescription("Software arch");
+        course.setName("Software Architecture");
 
         Student student = new Student();
         student.setName("Jonathan");
@@ -101,18 +101,18 @@ public class Application implements CommandLineRunner {
         Course course2 = new Course();
         course2.setName("Software Engineering I");
         course2.setTitle("SE101");
-        course2.setDescription("QQQQQ");
+        course2.setDescription("This is the Software Engineering I module");
 
 
         Course course3 = new Course();
         course3.setName("Software Engineering II");
         course3.setTitle("SE123");
-        course3.setDescription("qweee");
+        course3.setDescription("This is the Software Engineering II module");
         courseRepository.save(course2);
 
         Course course4 = new Course();
         course4.setName("Case Studies in Software Engineering");
-        course4.setDescription("CASE");
+        course4.setDescription("This is the Case Studies in Software Engineering module");
         course4.setTitle("IT123");
         courseRepository.save(course3);
 
@@ -139,7 +139,10 @@ public class Application implements CommandLineRunner {
 
         question = questionRepository.save(question);
 
+        quiz.setName("Software Architecture - mid");
+        quiz.setDate(new Date());
         quiz.addQuestion(question);
+        quiz.setDuration(2);
         quizRepository.save(quiz);
 
         Question question1 = new Question();
@@ -304,12 +307,15 @@ public class Application implements CommandLineRunner {
         t.setName("Mr. Nimal");
         t.setEmail("nimal@gmail.com");
         Set<Course> courses = new HashSet<>();
+        courses.add(course);
         courses.add(course2);
         courses.add(course3);
         t.setCourses(courses);
         teacherRepository.save(t);
+        course.getTeachers().add(t);
         course2.getTeachers().add(t);
         course3.getTeachers().add(t);
+        courseRepository.save(course);
         courseRepository.save(course2);
         courseRepository.save(course3);
 
@@ -319,7 +325,6 @@ public class Application implements CommandLineRunner {
         usert1.setPassword("123");
 
         userRepository.save(usert1);
-
 
         List<String> fbQuestionList = new ArrayList<>();
         fbQuestionList.add("The grade you expect for this module(A/B/C/D/F)");

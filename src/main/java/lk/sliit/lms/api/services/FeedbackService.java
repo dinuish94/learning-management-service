@@ -26,7 +26,7 @@ import java.util.List;
 public class FeedbackService {
 
     @Autowired
-    FeedbackRepository feedBackRepository;
+    FeedbackRepository feedbackRepository;
 
     @Autowired
     FeedBackQuestionRepository feedBackQuestionRepository;
@@ -39,29 +39,29 @@ public class FeedbackService {
 
     public List<Feedback> getFeedBackSessions(){
 
-        List<Feedback> feedBacks = new ArrayList<>();
-        feedBackRepository.findAll().forEach(feedBack -> {
-            feedBacks.add(feedBack);
+        List<Feedback> feedbacks = new ArrayList<>();
+        feedbackRepository.findAll().forEach(feedback -> {
+            feedbacks.add(feedback);
         });
-        return feedBacks;
+        return feedbacks;
     }
 
     public ResponseEntity<String> createFeedBack(FeedBackDTO feedBackDTO){
         List<FeedBackQuestion> fdqList = new ArrayList<>();
         Teacher teacher = teacherRepository.findOne(feedBackDTO.getTeacherId());
-        Feedback feedBack = new Feedback();
-        feedBack.setName(feedBackDTO.getName());
-        feedBack.setTeacher(teacher);
+        Feedback feedback = new Feedback();
+        feedback.setName(feedBackDTO.getName());
+        feedback.setTeacher(teacher);
 
         feedBackDTO.getFeedBackQuestions().forEach(feedBackQuestion -> {
 
             FeedBackQuestion fdQ = new FeedBackQuestion();
-            fdQ.setFeedBack(feedBack);
+            fdQ.setFeedBack(feedback);
             fdQ.setQuestion(feedBackQuestion);
             fdqList.add(fdQ);
         });
 
-        feedBackRepository.save(feedBack);
+        feedbackRepository.save(feedback);
         feedBackQuestionRepository.save(fdqList);
         return ResponseEntity.status(HttpStatus.CREATED).build();
 
@@ -86,7 +86,7 @@ public class FeedbackService {
     public List<FeedBackQuestionDTO> getFeedbackQuestions(Long fId){
 
         List<FeedBackQuestionDTO> questionList = new ArrayList<>();
-        Feedback fb=feedBackRepository.findOne(fId);
+        Feedback fb= feedbackRepository.findOne(fId);
         feedBackQuestionRepository.findAll().forEach(fbqs->{
             if(fbqs.getFeedBack().getfId()==fId){
                 FeedBackQuestionDTO feedBackQuestionDTO = new FeedBackQuestionDTO();

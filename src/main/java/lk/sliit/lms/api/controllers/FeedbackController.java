@@ -21,30 +21,30 @@ import java.util.List;
 public class FeedbackController {
 
     @Autowired
-    FeedbackService feedBackService;
+    FeedbackService feedbackService;
 
     @GetMapping("/")
     @ResponseBody()
     public Iterable<Feedback> getAllFeedbacks(){
-        return feedBackService.getFeedBackSessions();
+        return feedbackService.getFeedBackSessions();
     }
 
     @PostMapping("/")
     @ResponseBody()
     public  ResponseEntity<String> createFeedBacks(@RequestBody FeedBackDTO feedbackDTO){
-        return feedBackService.createFeedBack(feedbackDTO);
+        return feedbackService.createFeedBack(feedbackDTO);
     }
 
     @PostMapping("/feedback-answers")
     @ResponseBody()
     public ResponseEntity<String> storeFeedBacksAnswers(@RequestBody List<FeedBackAnswerDTO> feedbackDTO){
-        return feedBackService.storeFeedBack(feedbackDTO);
+        return feedbackService.storeFeedBack(feedbackDTO);
     }
 
     @GetMapping("/{fId}/questions")
     @ResponseBody()
     public Iterable<FeedBackQuestionDTO> getFeedbackQuestions(@PathVariable("fId") Long fId){
-        return feedBackService.getFeedbackQuestions(fId);
+        return feedbackService.getFeedbackQuestions(fId);
     }
 
 
